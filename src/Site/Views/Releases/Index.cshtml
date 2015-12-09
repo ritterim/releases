@@ -1,5 +1,10 @@
+@model RimDev.Releases.ViewModels.Releases.IndexViewModel
 @{
     ViewData["Title"] = "Home Page";
 }
 
 <h1>Hello World!</h1>
+
+@Model.Releases[0].GitHubRepository.Name
+<br />
+@Model.Releases[1].GitHubRepository.Name
