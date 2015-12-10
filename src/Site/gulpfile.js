@@ -6,6 +6,7 @@ var gulp = require("gulp"),
   concat = require("gulp-concat"),
   cssmin = require("gulp-cssmin"),
   uglify = require("gulp-uglify"),
+  sass = require("gulp-sass"),
   project = require("./project.json");
 
 var paths = {
@@ -28,6 +29,12 @@ gulp.task("clean:css", function(cb) {
 });
 
 gulp.task("clean", ["clean:js", "clean:css"]);
+
+gulp.task("sass", function () {
+    gulp.src(paths.webroot + "css/scss/*.scss")
+        .pipe(gulp.dest(paths.webroot + "css/"));
+});
+
 
 gulp.task("min:js", function() {
   gulp.src([paths.js, "!" + paths.minJs], {
