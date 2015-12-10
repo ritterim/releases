@@ -1,8 +1,9 @@
-using System.Threading.Tasks;
 using MarkdownSharp;
 using Microsoft.AspNet.Mvc.Rendering;
 using Microsoft.AspNet.Razor.TagHelpers;
+using Microsoft.Extensions.Logging;
 using Octokit;
+using System.Threading.Tasks;
 
 namespace RimDev.Releases.Infrastructure
 {
@@ -10,27 +11,43 @@ namespace RimDev.Releases.Infrastructure
     [HtmlTargetElement(Attributes = "markdown")]
     public class MarkdownTagHelper : TagHelper
     {
-        private GitHubClient client;
-
-        public MarkdownTagHelper(GitHubClient client)
+        public MarkdownTagHelper(
+            GitHubClient client,
+            ILogger<MarkdownTagHelper> logger)
         {
             this.client = client;
+            this.logger = logger;
         }
-           
+
+        private readonly GitHubClient client;
         public ModelExpression Content { get; set; }
+        private readonly ILogger<MarkdownTagHelper> logger;
+
         public async override Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
         {
             if (output.TagName == "markdown")
             {
                 output.TagName = null;
             }
+
             output.Attributes.RemoveAll("markdown");
 
-            var content = await GetContent(output);
-            var markdown = content;
-            var html = new Markdown().Transform(markdown);
-            // Using Octokit-version
-            //var html = await client.Miscellaneous.RenderRawMarkdown(markdown);
+            TagHelperAttribute attribute;
+            string html;
+            var markdown = await GetContent(output);
+
+            if (output.Attributes.TryGetAttribute("context", out attribute))
+            {
+                logger.LogInformation($"github context : {attribute.Value}");
+                var r = new NewArbitraryMarkdown(markdown, "gfm", attribute.Value.ToString());
+                html = await client.Miscellaneous.RenderArbitraryMarkdown(r);
+            }
+            else
+            {
+                logger.LogInformation($"defaulting to regular markdown.");
+                html = new Markdown().Transform(markdown);
+            }
+
             output.Content.SetHtmlContent(html ?? "");
         }
 
