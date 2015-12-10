@@ -9,6 +9,9 @@ using Microsoft.AspNet.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.OptionsModel;
+using Octokit;
+using RimDev.Releases.Models;
 
 namespace Site
 {
@@ -19,6 +22,7 @@ namespace Site
             // Set up configuration sources.
             var builder = new ConfigurationBuilder()
                 .AddJsonFile("appsettings.json")
+                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", true)
                 .AddEnvironmentVariables();
             Configuration = builder.Build();
         }
@@ -28,6 +32,21 @@ namespace Site
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
+            
+            services.AddSingleton<GitHubClient>(s => {
+               var settings = s.GetService<IOptions<AppSettings>>();
+
+                Console.WriteLine(settings.Value.AccessToken);
+
+                return new GitHubClient(new ProductHeaderValue(settings.Value.Company)) 
+               {
+                   Credentials = new Credentials(settings.Value.AccessToken)
+               };                
+            });
+
+            services.AddLogging();
+
             // Add framework services.
             services.AddMvc();
         }
@@ -51,11 +70,12 @@ namespace Site
 
             app.UseStaticFiles();
 
+            
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Releases}/{action=Index}/{id?}");
+                    template: "{controller=Releases}/{action=Index}");
             });
         }
 
