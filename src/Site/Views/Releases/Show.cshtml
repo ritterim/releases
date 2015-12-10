@@ -1,0 +1,24 @@
+@model RimDev.Releases.ViewModels.Releases.ShowViewModel
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="row">
+    <div class="col-md-8">
+        @foreach(var release in Model.Releases) {
+            <div class="row">
+                <div class="col-md-12">
+                    <h2>@release.Title</h2>
+                    <h3>release date : @release.CreatedAt</h3>
+                    <hr/>
+                    <div>
+                        <markdown context="@release.FullName">@release.Body</markdown>    
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+    <div class="col-md-4">
+        @Html.Partial("_repositories", Model.CurrentRepository)
+    </div>
+</div>
