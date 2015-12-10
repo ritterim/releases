@@ -1,0 +1,30 @@
+@inject Microsoft.Extensions.OptionsModel.IOptions<RimDev.Releases.Models.AppSettings> AppSettings
+@model RimDev.Releases.Models.GitHubRepository
+
+@functions{
+    string active(RimDev.Releases.Models.GitHubRepository r)
+    {
+        return AppSettings.Value.IsMatch(r.FullName, Model?.FullName) ? "active" : "";
+    }
+
+    string isAllActive()
+    {
+        return string.IsNullOrWhiteSpace(Model?.FullName) ? "active" : "";
+    }
+}
+<div class="list-group">
+    <a asp-controller="releases"
+        asp-action="index"
+        class="list-group-item @isAllActive()">
+        All
+    </a>
+@foreach (var release in AppSettings.Value.GetAllRepositories())
+{
+    <a asp-controller="releases"
+        asp-action="show"
+        asp-route-id="@release.FullName"
+        class="list-group-item @active(release)">
+        @release.Description
+    </a>
+}
+</div>

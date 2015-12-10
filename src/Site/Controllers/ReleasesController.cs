@@ -26,36 +26,76 @@ namespace Site.Controllers
             this.gitHub = gitHub;
             this.logger = logger;
         }
-        
+
         public async Task<IActionResult> Index()
         {
-            // take all the repositories
-            // Select them all via tasks, using the github client
-            // Task.WhenAll()
-            // you'd have a ReleaseViewModel
-
             var model = new IndexViewModel();
 
             var requests = appSettings
                 .GetAllRepositories()
-                .Select(async x => await GetLatestRelease(x))
+                .Select(x => GetLatestRelease(x))
                 .ToList();
 
-            foreach (var request in requests) {
+            await Task.WhenAll(requests);
+
+            foreach (var request in requests)
+            {
                 model.Releases.Add(request.Result);
             }
 
-            //var result = await gitHub.Release.GetAll()
             return View(model);
-        }  
+        }
+
+        public async Task<IActionResult> Show(string id)
+        {
+            var currentRepository = appSettings.Find(id);
+
+            if (currentRepository == null)
+                return HttpNotFound();
+
+            var releases = await GetAllReleases(currentRepository);
+            var activeRelease = releases.FirstOrDefault(x => x.FullName == id);
+
+            var model = new ShowViewModel(currentRepository);
+
+            foreach (var release in releases)
+            {
+                model.Releases.Add(release);
+            }
+
+            return View(model);
+        }
 
         public IActionResult Error()
         {
             return View();
         }
 
-        public async Task<ReleaseViewModel> GetLatestRelease(GitHubRepository gitHubRepository) {
-            try {
+        private async Task<IEnumerable<ReleaseViewModel>> GetAllReleases(GitHubRepository gitHubRepository)
+        {
+            try
+            {
+                var releases = new List<ReleaseViewModel>();
+                var gitHubReleases = await gitHub.Release.GetAll(gitHubRepository.Owner, gitHubRepository.Name);
+
+                foreach (var release in gitHubReleases)
+                {
+                    releases.Add(new ReleaseViewModel(gitHubRepository, release));
+                }
+
+                return releases;
+            }
+            catch (Exception ex)
+            {
+                logger.LogError($"github request failed for {gitHubRepository.Name}", ex);
+                return new List<ReleaseViewModel>();
+            }
+        }
+
+        private async Task<ReleaseViewModel> GetLatestRelease(GitHubRepository gitHubRepository)
+        {
+            try
+            {
                 var releases = await gitHub.Release.GetAll(gitHubRepository.Owner, gitHubRepository.Name);
 
                 return new ReleaseViewModel(gitHubRepository, releases.FirstOrDefault());
@@ -65,6 +105,6 @@ namespace Site.Controllers
                 logger.LogError($"github request failed for {gitHubRepository.Name}", ex);
                 return new ReleaseViewModel(gitHubRepository, null);
             }
-        }      
+        }
     }
 }

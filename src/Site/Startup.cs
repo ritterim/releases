@@ -75,7 +75,7 @@ namespace Site
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Releases}/{action=Index}/{id?}");
+                    template: "{controller=Releases}/{action=Index}");
             });
         }
 
