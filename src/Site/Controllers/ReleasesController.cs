@@ -4,7 +4,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Mvc;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.OptionsModel;
 using Octokit;
 using RimDev.Releases.Models;
 using RimDev.Releases.ViewModels.Releases;
@@ -18,11 +17,11 @@ namespace Site.Controllers
         private readonly ILogger logger;
 
         public ReleasesController(
-            IOptions<AppSettings> appSettings,
+            AppSettings appSettings,
             GitHubClient gitHub,
             ILogger<ReleasesController> logger)
         {
-            this.appSettings = appSettings.Value;
+            this.appSettings = appSettings;
             this.gitHub = gitHub;
             this.logger = logger;
         }
