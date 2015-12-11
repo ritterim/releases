@@ -12,7 +12,7 @@
                     <h3>release date : @release.CreatedAt</h3>
                     <hr/>
                     <div>
-                        <markdown context="@release.FullName">@release.Body</markdown>    
+                        @await Html.MarkdownAsync(release.FullName, release.Body)
                     </div>
                 </div>
             </div>
