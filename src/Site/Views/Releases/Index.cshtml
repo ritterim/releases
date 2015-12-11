@@ -1,24 +1,37 @@
 @model RimDev.Releases.ViewModels.Releases.IndexViewModel
 @{
-    ViewData["Title"] = "Home Page";
+  ViewData["Title"] = "Home Page";
 }
+<header class="container-fluid">
+  <div class="container-fluid header-title">
+    <div class="container">
+      <h1>
+        Company Name
+      </h1>
+    </div><!-- /.container -->
+  </div><!-- /.container-fluid -->
+  <div class="container">
+    <h4 class="text-muted"><span class="fa fa-github"></span> Viewing: Name</h4>
+    @Html.Partial("_repositories", new RimDev.Releases.Models.GitHubRepository())
+  </div><!-- /.container -->
+</header>
 
 <div class="row">
-    <div class="col-md-8">
-        @foreach(var release in Model.Releases) {
-            <div class="row">
-                <div class="col-md-12">
-                    <h2>@release.Description</h2>
-                    <h3>release date : @release.CreatedAt</h3>
-                    <hr/>
-                    <div>
-                        @await Html.MarkdownAsync(release.FullName, release.Body)
-                    </div>
-                </div>
-            </div>
-        }
-    </div>
-    <div class="col-md-4">
-        @Html.Partial("_repositories", new GitHubRepository())
-    </div>
-</div>
+  @foreach(var release in Model.Releases) {
+  <div class="col-md-4 text-right release-flags">
+  <span class="btn btn-success btn-release">Release</span>
+  <div class="text-muted"><span class="fa fa-calendar"></span> @release.CreatedAt</div>
+  <img class="avatar" src="https://avatars2.githubusercontent.com/u/6231956?v=3&s=32" alt="">
+  </div><!-- /.col-md-4 -->
+  <div class="col-md-8 release-column">
+      <div class="row release">
+        <div class="col-md-12">
+          <h2 class="text-primary">@release.Description</h2>
+          <div class="release-body">
+            @await Html.MarkdownAsync(release.FullName, release.Body)
+          </div><!-- /.release-body -->
+        </div><!-- /.col-md-12 -->
+      </div><!-- /.row release -->
+  </div><!-- /.col-md-8 -->
+  }
+</div><!-- /.row -->
