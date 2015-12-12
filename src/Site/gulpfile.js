@@ -6,6 +6,7 @@ var gulp = require("gulp"),
   concat = require("gulp-concat"),
   cssmin = require("gulp-cssmin"),
   uglify = require("gulp-uglify"),
+  sass = require("gulp-sass"),
   project = require("./project.json");
 
 var paths = {
@@ -18,6 +19,7 @@ paths.css = paths.webroot + "css/**/*.css";
 paths.minCss = paths.webroot + "css/**/*.min.css";
 paths.concatJsDest = paths.webroot + "js/site.min.js";
 paths.concatCssDest = paths.webroot + "css/site.min.css";
+paths.sass = paths.webroot + "css/**/*.scss";
 
 gulp.task("clean:js", function(cb) {
   rimraf(paths.concatJsDest, cb);
@@ -28,6 +30,12 @@ gulp.task("clean:css", function(cb) {
 });
 
 gulp.task("clean", ["clean:js", "clean:css"]);
+
+gulp.task('sass', function () {
+  return gulp.src(paths.sass, {base: paths.webroot + "css/scss"})
+    .pipe(sass())
+    .pipe(gulp.dest(paths.webroot + "css/"));
+});
 
 gulp.task("min:js", function() {
   gulp.src([paths.js, "!" + paths.minJs], {

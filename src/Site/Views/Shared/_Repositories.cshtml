@@ -12,19 +12,25 @@
         return string.IsNullOrWhiteSpace(Model?.FullName) ? "active" : "";
     }
 }
-<div class="list-group">
-    <a asp-controller="releases"
+<ul class="nav nav-tabs" data-tabs="tabs" role="tablist">
+    <li class="@isAllActive()" role="presentation">
+      <a
+        asp-controller="releases"
         asp-action="index"
-        class="list-group-item @isAllActive()">
+        class="@isAllActive()">
         All
-    </a>
+      </a>
+    </li>
 @foreach (var release in AppSettings.GetAllRepositories())
 {
-    <a asp-controller="releases"
+    <li class="@active(release)" role="presentation">
+      <a
+        asp-controller="releases"
         asp-action="show"
         asp-route-id="@release.FullName"
-        class="list-group-item @active(release)">
+        class="@active(release)">
         @release.Description
-    </a>
+        </a>
+    </li>
 }
-</div>
+</ul>

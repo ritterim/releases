@@ -1,0 +1,73 @@
+// Greyscale
+$grey:          #999;
+$grey-dark:     #333;
+$grey-light:    #ddd;
+$grey-lighter:  #efefef;
+$grey-lightest: #fafafa;
+
+// Extends
+
+%vertical-center {
+  -webkit-transform: translateY(-50%);
+     -moz-transform: translateY(-50%);
+       -o-transform: translateY(-50%);
+          transform: translateY(-50%);
+           position: relative;
+                top: 50%;
+}
+
+// Mixins
+
+@mixin square($dim) {
+  width: $dim;
+  height: $dim;
+}
+
+@mixin border-radius($tl, $tr: null, $br: null, $bl: null) {
+  @if $tr == null {
+    -webkit-border-radius: $tl;
+       -moz-border-radius: $tl;
+         -o-border-radius: $tl;
+            border-radius: $tl;
+  } @else {
+    -webkit-border-radius: $tl $tr $br $bl;
+       -moz-border-radius: $tl $tr $br $bl;
+         -o-border-radius: $tl $tr $br $bl;
+            border-radius: $tl $tr $br $bl;
+  }
+}
+
+@mixin text-shadow($x, $y, $blur, $color) {
+  -webkit-text-shadow: $x $y $blur $color;
+     -moz-text-shadow: $x $y $blur $color;
+       -o-text-shadow: $x $y $blur $color;
+          text-shadow: $x $y $blur $color;
+}
+
+@mixin box-shadow($x, $y: null, $blur: null, $color: null) {
+  @if $y == null {
+  -webkit-box-shadow: $x;
+     -moz-box-shadow: $x;
+       -o-box-shadow: $x;
+          box-shadow: $x;
+  } @else {
+  -webkit-box-shadow: $x $y $blur $color;
+     -moz-box-shadow: $x $y $blur $color;
+       -o-box-shadow: $x $y $blur $color;
+          box-shadow: $x $y $blur $color;
+  }
+}
+
+@mixin transition($style, $duration, $ease: ease-in-out, $delay: 0s) {
+  -webkit-transition: $style $duration $ease;
+     -moz-transition: $style $duration $ease;
+       -o-transition: $style $duration $ease;
+          transition: $style $duration $ease;
+}
+
+@mixin truncate ($max-width: 250px) {
+  max-width: $max-width;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

@@ -1,0 +1,29 @@
+header {
+  background: $grey-lightest;
+  border-bottom: 1px solid $grey-light
+  .header-title {
+    border-bottom: 1px solid $grey-light
+  }
+}
+.release-flags {
+  line-height: 2.5em;
+  .avatar {
+    border-radius: 50%;
+  }
+}
+.release {
+  border-bottom: 1px solid $grey-light;
+  border-left: 1px solid $grey-light;
+  .release-body {
+    white-space: pre;
+  }
+}
+.nav-tabs {
+  border-bottom: none !important;
+  &>li>a.active {
+    border-top: 3px solid chocolate;
+  }
+}
+.btn-release {
+  margin-top: 1em;
+}

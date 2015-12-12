@@ -1,0 +1,22 @@
+header {
+  background: #fafafa;
+  border-bottom: 1px solid #ddd; }
+
+.release-flags {
+  line-height: 2.5em; }
+  .release-flags .avatar {
+    border-radius: 50%; }
+
+.release {
+  border-bottom: 1px solid #ddd;
+  border-left: 1px solid #ddd; }
+  .release .release-body {
+    white-space: pre; }
+
+.nav-tabs {
+  border-bottom: none !important; }
+  .nav-tabs > li > a.active {
+    border-top: 3px solid chocolate; }
+
+.btn-release {
+  margin-top: 1em; }

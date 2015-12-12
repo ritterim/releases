@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html>
     <head>
         <meta charset="utf-8" />
@@ -7,20 +8,21 @@
 
         <environment names="Development">
             <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.5/css/bootstrap.min.css" />
-            <link rel="stylesheet" href="~/css/site.css" />
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/octicons/3.3.0/octicons.min.css">
+            <link rel="stylesheet" href="~/css/main.css" />
         </environment>
         <environment names="Staging,Production">
             <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.5/css/bootstrap.min.css"
                   asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
                   asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/octicons/3.3.0/octicons.min.css">
             <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
         </environment>
     </head>
     <body>
-        <div class="container body-content">
-            @RenderBody()
-            <hr />
-            <footer>
+        <div class="body-content">
+          @RenderBody()
+            <footer class="container text-center">
                 <p>&copy; 2015 - Site</p>
             </footer>
         </div>
