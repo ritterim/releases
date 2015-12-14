@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
+using System.Linq;
+using Microsoft.AspNet.WebUtilities;
 
 namespace RimDev.Releases.Infrastructure.GitHub
 {
@@ -9,12 +11,69 @@ namespace RimDev.Releases.Infrastructure.GitHub
         public int Page { get; set; }
         public int PageSize { get; set; }
 
+        public int? NextPage { get; set; }
+        public int? PreviousPage { get; set; }
+        public int LastPage { get; set; }
+
+        public int FirstPage { get; set; }
+
         public ReleasesResponse()
         {
             Releases = new List<Release>();
         }
 
         public IReadOnlyList<Release> Releases { get; set; }
+
+        public ReleasesResponse ParsePaging(string header)
+        {
+            if (string.IsNullOrWhiteSpace(header))
+                return this;
+
+            var links =
+            header
+                .Split(',')
+                .Select(x =>
+                {
+                    var values = x.Split(';');
+                    Console.WriteLine(values[0]);
+                    var uri = new Uri(values[0].Replace("<", "").Replace("<", ""));
+                    var queryDictionary = QueryHelpers.ParseQuery(uri.Query);
+
+                    return new { rel = values[1], querystring = QueryHelpers.ParseQuery(uri.Query) };
+                })
+                .ToList();
+
+            var next = links.FirstOrDefault(x => x.rel.Contains("next"));
+            var previous = links.FirstOrDefault(x => x.rel.Contains("prev"));
+            var first = links.FirstOrDefault(x => x.rel.Contains("first"));
+            var last = links.FirstOrDefault(x => x.rel.Contains("last"));
+
+            if (next != null)
+            {
+                NextPage = int.Parse(next.querystring["page"]);
+            }
+
+            if (PreviousPage != null)
+            {
+                PreviousPage = int.Parse(previous.querystring["page"]);
+            }
+
+            if (last != null)
+            {
+                LastPage = int.Parse(last.querystring["page"]);
+            }
+
+            if (first != null)
+            {
+                FirstPage = int.Parse(first.querystring["page"]);
+            } else {
+                FirstPage = 1;
+            }
+            
+            Console.WriteLine($"next : {NextPage}, last : {LastPage}, prev : {PreviousPage}, first : {FirstPage}");
+
+            return this;
+        }
     }
 
     public class Release
@@ -43,40 +102,40 @@ namespace RimDev.Releases.Infrastructure.GitHub
             UploadUrl = uploadUrl;
         }
 
-        public string Url { get;  set; }
+        public string Url { get; set; }
 
         [JsonProperty("html_url")]
-        public string HtmlUrl { get;  set; }
+        public string HtmlUrl { get; set; }
 
         [JsonProperty("assets_url")]
-        public string AssetsUrl { get;  set; }
+        public string AssetsUrl { get; set; }
 
         [JsonProperty("upload_url")]
-        public string UploadUrl { get;  set; }
+        public string UploadUrl { get; set; }
 
-        public int Id { get;  set; }
+        public int Id { get; set; }
 
         [JsonProperty("tag_name")]
-        public string TagName { get;  set; }
+        public string TagName { get; set; }
 
         [JsonProperty("target_commitish")]
-        public string TargetCommitish { get;  set; }
+        public string TargetCommitish { get; set; }
 
-        public string Name { get;  set; }
+        public string Name { get; set; }
 
-        public string Body { get;  set; }
+        public string Body { get; set; }
 
-        public bool Draft { get;  set; }
+        public bool Draft { get; set; }
 
-        public bool Prerelease { get;  set; }
+        public bool Prerelease { get; set; }
 
         [JsonProperty("created_at")]
-        public DateTimeOffset CreatedAt { get;  set; }
+        public DateTimeOffset CreatedAt { get; set; }
 
         [JsonProperty("published_at")]
-        public DateTimeOffset? PublishedAt { get;  set; }
+        public DateTimeOffset? PublishedAt { get; set; }
 
-        public Author Author { get;  set; }
+        public Author Author { get; set; }
     }
 
     public class Author
@@ -103,49 +162,49 @@ namespace RimDev.Releases.Infrastructure.GitHub
             SiteAdmin = siteAdmin;
         }
 
-        public string Login { get;  set; }
+        public string Login { get; set; }
 
-        public int Id { get;  set; }
+        public int Id { get; set; }
 
         [JsonProperty("avatar_url")]
-        public string AvatarUrl { get;  set; }
+        public string AvatarUrl { get; set; }
 
-        public string Url { get;  set; }
+        public string Url { get; set; }
 
         [JsonProperty("html_url")]
-        public string HtmlUrl { get;  set; }
+        public string HtmlUrl { get; set; }
 
         [JsonProperty("followers_url")]
-        public string FollowersUrl { get;  set; }
+        public string FollowersUrl { get; set; }
 
         [JsonProperty("following_url")]
-        public string FollowingUrl { get;  set; }
+        public string FollowingUrl { get; set; }
 
         [JsonProperty("gists_url")]
-        public string GistsUrl { get;  set; }
-        
+        public string GistsUrl { get; set; }
+
         [JsonProperty("starred_url")]
-        public string StarredUrl { get;  set; }
-        
+        public string StarredUrl { get; set; }
+
         [JsonProperty("subscriptions_url")]
-        public string SubscriptionsUrl { get;  set; }
-        
+        public string SubscriptionsUrl { get; set; }
+
         [JsonProperty("organizations_url")]
-        public string OrganizationsUrl { get;  set; }
-        
+        public string OrganizationsUrl { get; set; }
+
         [JsonProperty("repos_url")]
-        public string ReposUrl { get;  set; }
-        
+        public string ReposUrl { get; set; }
+
         [JsonProperty("events_url")]
-        public string EventsUrl { get;  set; }
+        public string EventsUrl { get; set; }
 
         [JsonProperty("received_events_url")]
-        public string ReceivedEventsUrl { get;  set; }
+        public string ReceivedEventsUrl { get; set; }
 
-        public string Type { get;  set; }
+        public string Type { get; set; }
 
         [JsonProperty("site_admin")]
-        public bool SiteAdmin { get;  set; }
+        public bool SiteAdmin { get; set; }
     }
 }
 

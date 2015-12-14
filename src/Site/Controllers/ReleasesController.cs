@@ -52,15 +52,20 @@ namespace Site.Controllers
             if (currentRepository == null)
                 return HttpNotFound();
 
-            var releases = await GetAllReleases(currentRepository);
-            var activeRelease = releases.FirstOrDefault(x => x.FullName == id);
+            var releases = await GetAllReleases(currentRepository);            
+            
+            if (releases == null)
+                return View(new ShowViewModel(currentRepository));
 
-            var model = new ShowViewModel(currentRepository);
-
-            foreach (var release in releases)
-            {
-                model.Releases.Add(release);
-            }
+            var model = new ShowViewModel(currentRepository) {
+              Releases = releases.Releases.Select(x => new ReleaseViewModel(currentRepository, x)).ToList(),
+              Page = releases.Page,
+              PageSize = releases.PageSize,
+              FirstPage = releases.FirstPage,
+              NextPage = releases.NextPage,
+              PreviousPage = releases.PreviousPage,
+              LastPage = releases.LastPage
+            };
 
             return View(model);
         }
@@ -70,24 +75,19 @@ namespace Site.Controllers
             return View();
         }
 
-        private async Task<IEnumerable<ReleaseViewModel>> GetAllReleases(GitHubRepository gitHubRepository)
+        private async Task<ReleasesResponse> GetAllReleases(GitHubRepository gitHubRepository)
         {
             try
             {
                 var releases = new List<ReleaseViewModel>();
                 var gitHubReleases = await gitHub.GetReleases(gitHubRepository.Owner, gitHubRepository.Name);
-
-                foreach (var release in gitHubReleases.Releases)
-                {
-                    releases.Add(new ReleaseViewModel(gitHubRepository, release));
-                }
-
-                return releases;
+                
+                return gitHubReleases;
             }
             catch (Exception ex)
             {
                 logger.LogError($"github request failed for {gitHubRepository.Name}", ex);
-                return new List<ReleaseViewModel>();
+                return null;;
             }
         }
 
