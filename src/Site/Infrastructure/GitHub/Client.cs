@@ -1,0 +1,84 @@
+using System;
+using System.Collections.Generic;
+using System.Net.Http;
+using System.Threading.Tasks;
+using Newtonsoft.Json;
+
+namespace RimDev.Releases.Infrastructure.GitHub
+{
+    public class Client
+    {
+        private readonly string apiToken;
+        private const string baseUrl = "https://api.github.com/";
+        private readonly string userAgent;
+
+        public Client(string apiToken, string userAgent = "RimDev.Releases")
+        {
+            this.apiToken = apiToken;
+            this.userAgent = userAgent;
+        }
+
+
+        public async Task<ReleasesResponse> GetReleases(string owner, string repo, int page = 1, int pageSize = 10)
+        {
+            var url = new Uri($"{baseUrl}/repos/{owner}/{repo}/releases?page={page}&per_page={pageSize}");
+
+            using (var client = GetClient(url))
+            {
+                var result = await client.GetAsync("");
+
+                result.EnsureSuccessStatusCode();
+
+                var response = await result.RequestMessage.Content.ReadAsStringAsync();
+
+                return new ReleasesResponse
+                {
+                    Releases = JsonConvert.DeserializeObject<List<Release>>(response).AsReadOnly(),
+                    Page = page,
+                    PageSize = pageSize
+                    // TODO: Use Link header to get paging info										
+                };
+            }
+        }
+
+        public async Task<Release> GetLatestRelease(string owner, string repo)
+        {
+            var url = new Uri($"{baseUrl}/repos/{owner}/{repo}/releases/latest");
+
+            using (var client = GetClient(url))
+            {
+                var result = await client.GetAsync("");
+                result.EnsureSuccessStatusCode();
+                var response = await result.RequestMessage.Content.ReadAsStringAsync();
+
+                return JsonConvert.DeserializeObject<Release>(response);
+            }
+        }
+
+        public async Task<string> RenderMarkdown(string markdown, string context, string mode = "gfm")
+        {
+            var url = new Uri("markdown");
+            var json = new { text = markdown, mode = mode, context = context };
+
+            using (var client = GetClient(url))
+            {
+                var response = await client.PostAsync("", new StringContent(JsonConvert.SerializeObject(json)));
+                return await response.Content.ReadAsStringAsync();
+            }
+
+        }
+
+        private HttpClient GetClient(Uri uri)
+        {
+            var client = new HttpClient
+            {
+                BaseAddress = uri
+            };
+
+            client.DefaultRequestHeaders.Add("Authorization", $"Token {apiToken}");
+            client.DefaultRequestHeaders.Add("User-Agent", userAgent);
+
+            return client;
+        }
+    }
+}
