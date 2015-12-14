@@ -42,33 +42,33 @@ namespace RimDev.Releases.Infrastructure.GitHub
             UploadUrl = uploadUrl;
         }
 
-        public string Url { get; protected set; }
+        public string Url { get;  set; }
 
-        public string HtmlUrl { get; protected set; }
+        public string HtmlUrl { get;  set; }
 
-        public string AssetsUrl { get; protected set; }
+        public string AssetsUrl { get;  set; }
 
-        public string UploadUrl { get; protected set; }
+        public string UploadUrl { get;  set; }
 
-        public int Id { get; protected set; }
+        public int Id { get;  set; }
 
-        public string TagName { get; protected set; }
+        public string TagName { get;  set; }
 
-        public string TargetCommitish { get; protected set; }
+        public string TargetCommitish { get;  set; }
 
-        public string Name { get; protected set; }
+        public string Name { get;  set; }
 
-        public string Body { get; protected set; }
+        public string Body { get;  set; }
 
-        public bool Draft { get; protected set; }
+        public bool Draft { get;  set; }
 
-        public bool Prerelease { get; protected set; }
+        public bool Prerelease { get;  set; }
 
-        public DateTimeOffset CreatedAt { get; protected set; }
+        public DateTimeOffset CreatedAt { get;  set; }
 
-        public DateTimeOffset? PublishedAt { get; protected set; }
+        public DateTimeOffset? PublishedAt { get;  set; }
 
-        public Author Author { get; protected set; }
+        public Author Author { get;  set; }
     }
 
     public class Author
@@ -95,37 +95,37 @@ namespace RimDev.Releases.Infrastructure.GitHub
             SiteAdmin = siteAdmin;
         }
 
-        public string Login { get; protected set; }
+        public string Login { get;  set; }
 
-        public int Id { get; protected set; }
+        public int Id { get;  set; }
 
-        public string AvatarUrl { get; protected set; }
+        public string AvatarUrl { get;  set; }
 
-        public string Url { get; protected set; }
+        public string Url { get;  set; }
 
-        public string HtmlUrl { get; protected set; }
+        public string HtmlUrl { get;  set; }
 
-        public string FollowersUrl { get; protected set; }
+        public string FollowersUrl { get;  set; }
 
-        public string FollowingUrl { get; protected set; }
+        public string FollowingUrl { get;  set; }
 
-        public string GistsUrl { get; protected set; }
+        public string GistsUrl { get;  set; }
 
-        public string StarredUrl { get; protected set; }
+        public string StarredUrl { get;  set; }
 
-        public string SubscriptionsUrl { get; protected set; }
+        public string SubscriptionsUrl { get;  set; }
 
-        public string OrganizationsUrl { get; protected set; }
+        public string OrganizationsUrl { get;  set; }
 
-        public string ReposUrl { get; protected set; }
+        public string ReposUrl { get;  set; }
 
-        public string EventsUrl { get; protected set; }
+        public string EventsUrl { get;  set; }
 
-        public string ReceivedEventsUrl { get; protected set; }
+        public string ReceivedEventsUrl { get;  set; }
 
-        public string Type { get; protected set; }
+        public string Type { get;  set; }
 
-        public bool SiteAdmin { get; protected set; }
+        public bool SiteAdmin { get;  set; }
     }
 }
 

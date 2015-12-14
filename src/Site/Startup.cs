@@ -3,9 +3,9 @@ using Microsoft.AspNet.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Octokit;
 using RimDev.Releases.Models;
 using System;
+using RimDev.Releases.Infrastructure.GitHub;
 
 namespace Site
 {
@@ -30,20 +30,13 @@ namespace Site
             {
                 var appSettings = new AppSettings();
                 Configuration.GetSection("AppSettings").Bind(appSettings);
-
                 return appSettings;
             });
 
-            services.AddSingleton<GitHubClient>(s =>
+            services.AddSingleton<Client>(s =>
             {
-                var settings = s.GetService<AppSettings>();
-
-                Console.WriteLine(settings.AccessToken);
-
-                return new GitHubClient(new ProductHeaderValue(settings.Company))
-                {
-                    Credentials = new Credentials(settings.AccessToken)
-                };
+                var settings = s.GetService<AppSettings>();                
+                return new Client(settings.AccessToken, settings.Company);                    
             });
 
             services.AddLogging();

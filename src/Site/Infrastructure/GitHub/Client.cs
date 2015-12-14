@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
@@ -13,23 +14,24 @@ namespace RimDev.Releases.Infrastructure.GitHub
         private readonly string userAgent;
 
         public Client(string apiToken, string userAgent = "RimDev.Releases")
-        {
+        {            
             this.apiToken = apiToken;
             this.userAgent = userAgent;
         }
 
-
         public async Task<ReleasesResponse> GetReleases(string owner, string repo, int page = 1, int pageSize = 10)
         {
-            var url = new Uri($"{baseUrl}/repos/{owner}/{repo}/releases?page={page}&per_page={pageSize}");
-
+            var url = new Uri($"{baseUrl}repos/{owner}/{repo}/releases?page={page}&per_page={pageSize}");
+            
+            Console.WriteLine(url.ToString());
+            
             using (var client = GetClient(url))
-            {
-                var result = await client.GetAsync("");
+            {                
+                var result = await client.GetAsync("");                
 
                 result.EnsureSuccessStatusCode();
 
-                var response = await result.RequestMessage.Content.ReadAsStringAsync();
+                var response = await result.Content.ReadAsStringAsync();                
 
                 return new ReleasesResponse
                 {
@@ -42,22 +44,14 @@ namespace RimDev.Releases.Infrastructure.GitHub
         }
 
         public async Task<Release> GetLatestRelease(string owner, string repo)
-        {
-            var url = new Uri($"{baseUrl}/repos/{owner}/{repo}/releases/latest");
-
-            using (var client = GetClient(url))
-            {
-                var result = await client.GetAsync("");
-                result.EnsureSuccessStatusCode();
-                var response = await result.RequestMessage.Content.ReadAsStringAsync();
-
-                return JsonConvert.DeserializeObject<Release>(response);
-            }
+        {       
+            var release = await GetReleases(owner, repo, 1, 1);
+            return release.Releases.FirstOrDefault();
         }
 
         public async Task<string> RenderMarkdown(string markdown, string context, string mode = "gfm")
         {
-            var url = new Uri("markdown");
+            var url = new Uri($"{baseUrl}markdown");
             var json = new { text = markdown, mode = mode, context = context };
 
             using (var client = GetClient(url))
@@ -65,7 +59,6 @@ namespace RimDev.Releases.Infrastructure.GitHub
                 var response = await client.PostAsync("", new StringContent(JsonConvert.SerializeObject(json)));
                 return await response.Content.ReadAsStringAsync();
             }
-
         }
 
         private HttpClient GetClient(Uri uri)

@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using Octokit;
+using RimDev.Releases.Infrastructure.GitHub;
 using RimDev.Releases.Models;
 
 namespace RimDev.Releases.ViewModels.Releases
