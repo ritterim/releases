@@ -7,6 +7,13 @@ $grey-lightest: #fafafa;
 
 // Extends
 
+%flexbox {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  overflow: hidden;
+}
+
 %vertical-center {
   -webkit-transform: translateY(-50%);
      -moz-transform: translateY(-50%);
@@ -17,6 +24,14 @@ $grey-lightest: #fafafa;
 }
 
 // Mixins
+
+@mixin border($position:null,$color:$grey-light) {
+  @if $position != null {
+    border-#{$position}: 1px solid $color;
+  } @else {
+     border: 1px solid $color;
+  }
+}
 
 @mixin square($dim) {
   width: $dim;

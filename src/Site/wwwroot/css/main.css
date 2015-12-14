@@ -1,22 +1,74 @@
+.release {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  overflow: hidden; }
+
 header {
   background: #fafafa;
   border-bottom: 1px solid #ddd; }
 
-.release-flags {
-  line-height: 2.5em; }
-  .release-flags .avatar {
-    border-radius: 50%; }
-
-.release {
-  border-bottom: 1px solid #ddd;
-  border-left: 1px solid #ddd; }
-  .release .release-body {
-    white-space: pre; }
+.header-title {
+  background: #f4f4f4;
+  border-bottom: 1px solid #ddd; }
 
 .nav-tabs {
   border-bottom: none !important; }
-  .nav-tabs > li > a.active {
+  .nav-tabs > li.active {
     border-top: 3px solid chocolate; }
+  .nav-tabs > li > a {
+    border: none; }
+    .nav-tabs > li > a.active, .nav-tabs > li > a.active:hover {
+      background: white;
+      border-top: 3px solid chocolate;
+      border-left: 1px solid #ddd;
+      border-right: 1px solid #ddd; }
+    .nav-tabs > li > a:hover {
+      color: chocolate;
+      background: none;
+      border: none; }
 
-.btn-release {
-  margin-top: 1em; }
+.release:last-of-type .release-col {
+  border-bottom: none; }
+
+.release .release-flags {
+  line-height: 2.5em; }
+  .release .release-flags .btn {
+    color: white;
+    padding: .2em .3em; }
+  .release .release-flags .btn-release {
+    background: #5cb85c; }
+  .release .release-flags .btn-no-release {
+    background: #6e5494; }
+  .release .release-flags .avatar {
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    -o-border-radius: 50%;
+    border-radius: 50%;
+    border: 1px solid #ddd; }
+
+.release .release-col {
+  border-bottom: 1px solid #ddd;
+  border-left: 1px solid #ddd; }
+  .release .release-col .release-body {
+    padding-bottom: 2em; }
+    .release .release-col .release-body a[href^="https://github.com"] {
+      background: #def2f5;
+      padding: .2em;
+      -webkit-border-radius: 3px;
+      -moz-border-radius: 3px;
+      -o-border-radius: 3px;
+      border-radius: 3px; }
+
+footer {
+  padding: 2em; }
+  footer p {
+    color: #999; }
+  footer a {
+    color: white; }
+    footer a.btn:hover {
+      color: white; }
+    footer a.btn-rimdev {
+      background: #999;
+      border: 1px solid #ddd;
+      padding: .2em; }

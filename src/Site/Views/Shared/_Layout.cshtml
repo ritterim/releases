@@ -22,10 +22,14 @@
     <body>
         <div class="body-content">
           @RenderBody()
-            <footer class="container text-center">
-                <p>&copy; 2015 - Site</p>
-            </footer>
         </div>
+        <footer class="container-fluid">
+          <div class="container">
+            <p class="text-center">
+              <span class="octicon octicon-pencil"></span> with <span class="octicon octicon-heart"></span> by <a class="btn btn-rimdev" href="http://rimdev.io" title="RIMdev">RIMdev</a>
+            </p>
+          </div>
+        </footer>
 
         <environment names="Development">
             <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-2.1.4.min.js"></script>

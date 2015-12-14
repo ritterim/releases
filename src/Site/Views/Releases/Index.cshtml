@@ -2,38 +2,36 @@
 @{
   ViewData["Title"] = "Home Page";
 }
-<header class="container-fluid">
-  <div class="container-fluid header-title">
-    <div class="container">
-      <h1>
-        Company Name
-      </h1>
-    </div><!-- /.container -->
-  </div><!-- /.container-fluid -->
+<div class="container-fluid header-title">
   <div class="container">
-    <h4 class="text-muted"><span class="fa fa-github"></span> Viewing: Name</h4>
+    <h1>CompanyName</h1>
+  </div><!-- /.container -->
+</div><!-- /.header-title -->
+
+<header class="container-fluid">
+  <div class="container">
+    <h4 class="text-muted"><span class="octicon octicon-repo"></span> RepositoryName</h4>
     @Html.Partial("_repositories", new RimDev.Releases.Models.GitHubRepository())
   </div><!-- /.container -->
 </header>
 
-<div class="row">
+<div class="container">
   @foreach(var release in Model.Releases) {
-    if (release.HasRelease) {    
-      <div class="col-md-4 text-right release-flags">
-      <span class="btn btn-success btn-release">Release</span>
-      <div class="text-muted"><span class="fa fa-calendar"></span> @release.CreatedAt</div>
+	if (release.HasRelease) {
+  <div class="row release">
+    <div class="col-md-2 text-right release-flags">
+      <span class="btn btn-release">Release</span>
+      <div class="text-muted">@release.CreatedAt <span class="octicon octicon-calendar"></span></div>
       <img class="avatar" src="@(release.Release.Author.AvatarUrl)?v=3&s=32" alt="@(release.Release.Author.Login)" title="@(release.Release.Author.Login)">
-      </div><!-- /.col-md-4 -->
-      <div class="col-md-8 release-column">
-          <div class="row release">
-            <div class="col-md-12">
-              <h2 class="text-primary">@release.Description</h2>
-              <div class="release-body">
-                @await Html.MarkdownAsync(release.FullName, release.Body)
-              </div><!-- /.release-body -->
-            </div><!-- /.col-md-12 -->
-          </div><!-- /.row release -->
-      </div><!-- /.col-md-8 -->
-    }
+    </div><!-- /.release-flags -->
+
+    <div class="col-md-10 release-col">
+      <h2 class="text-primary">@release.Description</h2>
+      <div class="release-body">
+        @await Html.MarkdownAsync(release.FullName, release.Body)
+      </div><!-- /.release-body -->
+    </div><!-- /.release-col -->
+  </div><!-- /.row release-->
   }
-</div><!-- /.row -->
+}
+</div><!-- /.container -->
