@@ -29,7 +29,7 @@
         <div class="col-md-12">
           <h2 class="text-primary">@release.Description</h2>
           <div class="release-body">
-          <markdown context="@release.FullName">@release.Body</markdown>
+            @await Html.MarkdownAsync(release.FullName, release.Body)
           </div><!-- /.release-body -->
         </div><!-- /.col-md-12 -->
       </div><!-- /.row release -->
