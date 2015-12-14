@@ -1,0 +1,17 @@
+@inject AppSettings AppSettings
+@{
+  var repository = (ViewData["Repository"] as GitHubRepository) ??  new Stub("All");
+}
+<div class="container-fluid header-title">
+  <div class="container">
+    <h1>
+      @AppSettings.Company
+    </h1>
+  </div><!-- /.container -->
+</div><!-- /.container-fluid -->
+<header class="container-fluid">
+  <div class="container">
+    <h4 class="text-muted"><span class="octicon octicon-repo"></span> @repository.Description</h4>
+    @Html.Partial("_repositories", repository)
+  </div><!-- /.container -->
+</header>

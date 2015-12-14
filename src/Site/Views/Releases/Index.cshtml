@@ -2,18 +2,8 @@
 @{
   ViewData["Title"] = "Home Page";
 }
-<div class="container-fluid header-title">
-  <div class="container">
-    <h1>CompanyName</h1>
-  </div><!-- /.container -->
-</div><!-- /.header-title -->
 
-<header class="container-fluid">
-  <div class="container">
-    <h4 class="text-muted"><span class="octicon octicon-repo"></span> RepositoryName</h4>
-    @Html.Partial("_repositories", new RimDev.Releases.Models.GitHubRepository())
-  </div><!-- /.container -->
-</header>
+@Html.Partial("_Header")
 
 <div class="container">
   @foreach(var release in Model.Releases) {
@@ -26,7 +16,8 @@
     </div><!-- /.release-flags -->
 
     <div class="col-md-10 release-col">
-      <h2 class="text-primary">@release.Description</h2>
+      <h2>@release.Description</h2>
+      <h3 class="text-primary">@release.Title</h3>
       <div class="release-body">
         @await Html.MarkdownAsync(release.FullName, release.Body)
       </div><!-- /.release-body -->
