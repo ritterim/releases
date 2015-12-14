@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using Octokit;
+using RimDev.Releases.Infrastructure.GitHub;
 using RimDev.Releases.Models;
 
 namespace RimDev.Releases.ViewModels.Releases
@@ -34,5 +34,7 @@ namespace RimDev.Releases.ViewModels.Releases
 
         public string Body => Release?.Body;
         public string CreatedAt => (Release != null) ? Release.CreatedAt.Date.ToShortDateString() : "n/a";
+		
+		public bool HasRelease => Release != null;
     }
 }

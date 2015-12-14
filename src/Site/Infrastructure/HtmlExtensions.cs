@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
 using Microsoft.AspNet.Mvc.Rendering;
-using Octokit;
+using RimDev.Releases.Infrastructure.GitHub;
 
 namespace RimDev.Releases.Infrastructure
 {
@@ -10,13 +10,12 @@ namespace RimDev.Releases.Infrastructure
             string context,
             string markdown)
             {
-                var client = value.ViewContext.HttpContext.ApplicationServices.GetService(typeof(GitHubClient)) as GitHubClient;
+                var client = value.ViewContext.HttpContext.ApplicationServices.GetService(typeof(Client)) as Client;
                 string html = string.Empty;
                 
                 if (!string.IsNullOrWhiteSpace(context) && !string.IsNullOrWhiteSpace(markdown))
-                {
-                    var r = new NewArbitraryMarkdown(markdown, "gfm", context);
-                    html = await client.Miscellaneous.RenderArbitraryMarkdown(r);
+                {                    
+                    html = await client.RenderMarkdown(markdown, context);
                 }
                 
                 return new HtmlString(html);

@@ -18,20 +18,22 @@
 
 <div class="row">
   @foreach(var release in Model.Releases) {
-  <div class="col-md-4 text-right release-flags">
-  <span class="btn btn-success btn-release">Release</span>
-  <div class="text-muted"><span class="fa fa-calendar"></span> @release.CreatedAt</div>
-  <img class="avatar" src="https://avatars2.githubusercontent.com/u/6231956?v=3&s=32" alt="">
-  </div><!-- /.col-md-4 -->
-  <div class="col-md-8 release-column">
-      <div class="row release">
-        <div class="col-md-12">
-          <h2 class="text-primary">@release.Description</h2>
-          <div class="release-body">
-            @await Html.MarkdownAsync(release.FullName, release.Body)
-          </div><!-- /.release-body -->
-        </div><!-- /.col-md-12 -->
-      </div><!-- /.row release -->
-  </div><!-- /.col-md-8 -->
+    if (release.HasRelease) {    
+      <div class="col-md-4 text-right release-flags">
+      <span class="btn btn-success btn-release">Release</span>
+      <div class="text-muted"><span class="fa fa-calendar"></span> @release.CreatedAt</div>
+      <img class="avatar" src="@(release.Release.Author.AvatarUrl)?v=3&s=32" alt="@(release.Release.Author.Login)" title="@(release.Release.Author.Login)">
+      </div><!-- /.col-md-4 -->
+      <div class="col-md-8 release-column">
+          <div class="row release">
+            <div class="col-md-12">
+              <h2 class="text-primary">@release.Description</h2>
+              <div class="release-body">
+                @await Html.MarkdownAsync(release.FullName, release.Body)
+              </div><!-- /.release-body -->
+            </div><!-- /.col-md-12 -->
+          </div><!-- /.row release -->
+      </div><!-- /.col-md-8 -->
+    }
   }
 </div><!-- /.row -->

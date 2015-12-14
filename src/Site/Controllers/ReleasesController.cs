@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Mvc;
 using Microsoft.Extensions.Logging;
-using Octokit;
+using RimDev.Releases.Infrastructure.GitHub;
 using RimDev.Releases.Models;
 using RimDev.Releases.ViewModels.Releases;
 
@@ -13,12 +13,12 @@ namespace Site.Controllers
     public class ReleasesController : Controller
     {
         private readonly AppSettings appSettings;
-        private readonly GitHubClient gitHub;
+        private readonly Client gitHub;
         private readonly ILogger logger;
 
         public ReleasesController(
             AppSettings appSettings,
-            GitHubClient gitHub,
+            Client gitHub,
             ILogger<ReleasesController> logger)
         {
             this.appSettings = appSettings;
@@ -75,9 +75,9 @@ namespace Site.Controllers
             try
             {
                 var releases = new List<ReleaseViewModel>();
-                var gitHubReleases = await gitHub.Release.GetAll(gitHubRepository.Owner, gitHubRepository.Name);
+                var gitHubReleases = await gitHub.GetReleases(gitHubRepository.Owner, gitHubRepository.Name);
 
-                foreach (var release in gitHubReleases)
+                foreach (var release in gitHubReleases.Releases)
                 {
                     releases.Add(new ReleaseViewModel(gitHubRepository, release));
                 }
@@ -95,9 +95,8 @@ namespace Site.Controllers
         {
             try
             {
-                var releases = await gitHub.Release.GetAll(gitHubRepository.Owner, gitHubRepository.Name);
-
-                return new ReleaseViewModel(gitHubRepository, releases.FirstOrDefault());
+                var release = await gitHub.GetLatestRelease(gitHubRepository.Owner, gitHubRepository.Name);
+                return new ReleaseViewModel(gitHubRepository, release);
             }
             catch (Exception ex)
             {
