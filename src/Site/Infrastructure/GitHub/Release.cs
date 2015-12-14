@@ -36,7 +36,7 @@ namespace RimDev.Releases.Infrastructure.GitHub
                 {
                     var values = x.Split(';');
                     Console.WriteLine(values[0]);
-                    var uri = new Uri(values[0].Replace("<", "").Replace("<", ""));
+                    var uri = new Uri(values[0].Replace("<", "").Replace(">", ""));
                     var queryDictionary = QueryHelpers.ParseQuery(uri.Query);
 
                     return new { rel = values[1], querystring = QueryHelpers.ParseQuery(uri.Query) };
