@@ -1,29 +1,79 @@
 header {
   background: $grey-lightest;
-  border-bottom: 1px solid $grey-light
-  .header-title {
-    border-bottom: 1px solid $grey-light
-  }
-}
-.release-flags {
-  line-height: 2.5em;
-  .avatar {
-    border-radius: 50%;
-  }
-}
-.release {
   border-bottom: 1px solid $grey-light;
-  border-left: 1px solid $grey-light;
-  .release-body {
-    white-space: pre;
-  }
 }
+
+.header-title {
+  background: lighten($grey-light,9%);
+  @include border(bottom);
+}
+
 .nav-tabs {
   border-bottom: none !important;
-  &>li>a.active {
-    border-top: 3px solid chocolate;
+  &>li.active {border-top: 3px solid chocolate;}
+  &>li>a {
+    border: none;
+    &.active,
+    &.active:hover {
+      background: white;
+      border-top: 3px solid chocolate;
+      @include border(left);
+      @include border(right);
+    }
+    &:hover {
+      color: chocolate;
+      background: none;
+      border: none;
+    }
   }
 }
-.btn-release {
-  margin-top: 1em;
+
+.release {
+  @extend %flexbox;
+  &:last-of-type {
+    .release-col {border-bottom: none;}
+  }
+  .release-flags {
+    line-height: 2.5em;
+    .btn {
+      color: white;
+      padding: .2em .3em;
+    }
+    .btn-release {
+      background: #5cb85c;
+    }
+    .btn-no-release {
+      background: #6e5494;
+    }
+    .avatar {
+      @include border-radius(50%);
+      @include border;
+    }
+  }
+  .release-col {
+    @include border(bottom);
+    @include border(left);
+    .release-body {
+      padding-bottom: 2em;
+      a[href^="https://github.com"] {
+        background: lighten(powderblue,12%);
+        padding: .2em;
+        @include border-radius(3px);
+      }
+    }
+  }
+}
+
+footer {
+  padding: 2em;
+  p {color: $grey;}
+    a {
+      color: white;
+      &.btn:hover {color: white;}
+      &.btn-rimdev {
+        background: $grey;
+        @include border;
+        padding: .2em;
+      }
+    }
 }

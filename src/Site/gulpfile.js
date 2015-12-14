@@ -46,6 +46,10 @@ gulp.task("min:js", function() {
     .pipe(gulp.dest("."));
 });
 
+gulp.task('watch', function() {
+    gulp.watch(paths.sass, ['sass']);
+});
+
 gulp.task("min:css", function() {
   gulp.src([paths.css, "!" + paths.minCss])
     .pipe(concat(paths.concatCssDest))
@@ -53,4 +57,4 @@ gulp.task("min:css", function() {
     .pipe(gulp.dest("."));
 });
 
-gulp.task("min", ["min:js", "min:css"]);
+gulp.task("min", ["min:js", "min:css", "sass", "watch"]);

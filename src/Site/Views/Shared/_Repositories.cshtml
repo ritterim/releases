@@ -13,7 +13,7 @@
     }
 }
 <ul class="nav nav-tabs" data-tabs="tabs" role="tablist">
-    <li class="@isAllActive()" role="presentation">
+    <li role="presentation">
       <a
         asp-controller="releases"
         asp-action="index"
@@ -23,7 +23,7 @@
     </li>
 @foreach (var release in AppSettings.GetAllRepositories())
 {
-    <li class="@active(release)" role="presentation">
+    <li role="presentation">
       <a
         asp-controller="releases"
         asp-action="show"
