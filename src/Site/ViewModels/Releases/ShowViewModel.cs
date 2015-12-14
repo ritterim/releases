@@ -28,5 +28,4 @@ namespace RimDev.Releases.ViewModels.Releases
         public int FirstPage { get; set; }
     }
 
-
 }
