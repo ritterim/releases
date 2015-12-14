@@ -29,15 +29,17 @@ namespace RimDev.Releases.Infrastructure.GitHub
 
                 result.EnsureSuccessStatusCode();
 
-                var response = await result.Content.ReadAsStringAsync();             
-
+                var response = await result.Content.ReadAsStringAsync();
+                
+                IEnumerable<string> links;                
+                result.Headers.TryGetValues("Link", out links);
+                             
                 return new ReleasesResponse
                 {
                     Releases = JsonConvert.DeserializeObject<List<Release>>(response).AsReadOnly(),
                     Page = page,
-                    PageSize = pageSize
-                    // TODO: Use Link header to get paging info										
-                };
+                    PageSize = pageSize                    										
+                }.ParsePaging((links ?? new string[0]).FirstOrDefault());
             }
         }
 
