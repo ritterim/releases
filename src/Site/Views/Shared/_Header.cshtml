@@ -1,6 +1,6 @@
 @inject AppSettings AppSettings
 @{
-  var repository = (@ViewData["Repository"] as GitHubRepository) ??  new RimDev.Releases.Models.Stub("All");
+  var repository = (ViewData["Repository"] as GitHubRepository) ??  new Stub("All");
 }
 <div class="container-fluid header-title">
   <div class="container">
