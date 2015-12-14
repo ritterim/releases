@@ -54,4 +54,10 @@ namespace RimDev.Releases.Models
         public string Name { get; protected set; }
         public string FullName { get; protected set; }
     }
+    
+    public class Stub : GitHubRepository {
+        public Stub(string description) {
+            Description = description;
+        }
+    }
 }

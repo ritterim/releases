@@ -29,9 +29,7 @@ namespace RimDev.Releases.Infrastructure.GitHub
 
                 result.EnsureSuccessStatusCode();
 
-                var response = await result.Content.ReadAsStringAsync();
-                
-                Console.WriteLine(response);                
+                var response = await result.Content.ReadAsStringAsync();             
 
                 return new ReleasesResponse
                 {
