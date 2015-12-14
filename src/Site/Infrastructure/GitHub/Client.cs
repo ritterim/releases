@@ -22,16 +22,16 @@ namespace RimDev.Releases.Infrastructure.GitHub
         public async Task<ReleasesResponse> GetReleases(string owner, string repo, int page = 1, int pageSize = 10)
         {
             var url = new Uri($"{baseUrl}repos/{owner}/{repo}/releases?page={page}&per_page={pageSize}");
-            
-            Console.WriteLine(url.ToString());
-            
+                       
             using (var client = GetClient(url))
             {                
                 var result = await client.GetAsync("");                
 
                 result.EnsureSuccessStatusCode();
 
-                var response = await result.Content.ReadAsStringAsync();                
+                var response = await result.Content.ReadAsStringAsync();
+                
+                Console.WriteLine(response);                
 
                 return new ReleasesResponse
                 {
