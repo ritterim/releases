@@ -38,8 +38,9 @@ namespace RimDev.Releases.Infrastructure.GitHub
                     var values = x.Split(';');
                     Console.WriteLine(values[0]);
                     var uri = new Uri(Regex.Match(values[0], "<(.*?)>", RegexOptions.Compiled).Groups[1].Value);
+                    var rel = Regex.Match(values[1], "rel=\"(.*?)\"", RegexOptions.Compiled).Groups[1].Value;
 
-                    return new { rel = Regex.Match(values[1], "rel=\"(.*?)\"", RegexOptions.Compiled).Groups[1].Value, querystring = QueryHelpers.ParseQuery(uri.Query) };
+                    return new { rel = rel, querystring = QueryHelpers.ParseQuery(uri.Query) };
                 })
                 .ToList();
 
@@ -53,7 +54,7 @@ namespace RimDev.Releases.Infrastructure.GitHub
                 NextPage = int.Parse(next.querystring["page"]);
             }
 
-            if (PreviousPage != null)
+            if (previous != null)
             {
                 PreviousPage = int.Parse(previous.querystring["page"]);
             }
@@ -62,16 +63,20 @@ namespace RimDev.Releases.Infrastructure.GitHub
             {
                 LastPage = int.Parse(last.querystring["page"]);
             }
+            else 
+            {
+                LastPage = 1;
+            }
 
             if (first != null)
             {
                 FirstPage = int.Parse(first.querystring["page"]);
-            } else {
+            }
+            else
+            {
                 FirstPage = 1;
             }
             
-            Console.WriteLine($"next : {NextPage}, last : {LastPage}, prev : {PreviousPage}, first : {FirstPage}");
-
             return this;
         }
     }

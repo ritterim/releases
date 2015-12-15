@@ -14,7 +14,7 @@ namespace RimDev.Releases.Infrastructure.GitHub
         private readonly string userAgent;
 
         public Client(string apiToken, string userAgent = "RimDev.Releases")
-        {            
+        {
             this.apiToken = apiToken;
             this.userAgent = userAgent;
         }
@@ -22,29 +22,31 @@ namespace RimDev.Releases.Infrastructure.GitHub
         public async Task<ReleasesResponse> GetReleases(string owner, string repo, int page = 1, int pageSize = 10)
         {
             var url = new Uri($"{baseUrl}repos/{owner}/{repo}/releases?page={page}&per_page={pageSize}");
-                       
+
             using (var client = GetClient(url))
-            {                
-                var result = await client.GetAsync("");                
+            {
+                var result = await client.GetAsync("");
 
                 result.EnsureSuccessStatusCode();
 
                 var response = await result.Content.ReadAsStringAsync();
-                
-                IEnumerable<string> links;                
+
+                IEnumerable<string> links;
                 result.Headers.TryGetValues("Link", out links);
-                             
+                var header = (links ?? new string[0]).FirstOrDefault();
+                Console.WriteLine($"header : {header}");
+
                 return new ReleasesResponse
                 {
                     Releases = JsonConvert.DeserializeObject<List<Release>>(response).AsReadOnly(),
                     Page = page,
-                    PageSize = pageSize                    										
-                }.ParsePaging((links ?? new string[0]).FirstOrDefault());
+                    PageSize = pageSize
+                }.ParsePaging(header);
             }
         }
 
         public async Task<Release> GetLatestRelease(string owner, string repo)
-        {       
+        {
             var release = await GetReleases(owner, repo, 1, 1);
             return release.Releases.FirstOrDefault();
         }

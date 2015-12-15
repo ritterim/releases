@@ -26,6 +26,28 @@
     </div><!-- /.release -->
     }
   }
+  
+  <ul class="pager">    
+    @if (Model.PreviousPage.HasValue) {
+    <li class="previous">
+      <a asp-action="show" 
+         asp-route-id=@Model.CurrentRepository.FullName 
+         asp-route-page=@Model.PreviousPage.Value>
+         Previous
+      </a>
+    </li>
+    }
+    @if (Model.NextPage.HasValue) {
+    <li class="next">
+      <a asp-action="show"
+         asp-route-id=@Model.CurrentRepository.FullName
+         asp-route-page=@Model.NextPage.Value>
+         Next
+      </a>
+    </li>
+    }
+  </ul>
+  
 } else {
   <div class="row no-release">
     <span class="msg-no-release center-block"><span class="octicon octicon-squirrel"></span> Whoa! There's just nothing to see here!</span>
