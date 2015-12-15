@@ -4,6 +4,12 @@
 }
 <div class="container-fluid header-title">
   <div class="container">
+      @if (AppSettings.HasLogo)
+      {
+        <div class="header-logo">
+          <img src="@AppSettings.Logo" alt="@AppSettings.Company">
+        </div>
+      }
       <h1>@AppSettings.Company</h1>
   </div><!-- /.container -->
 </div><!-- /.container-fluid -->
