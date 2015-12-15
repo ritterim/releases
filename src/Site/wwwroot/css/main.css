@@ -29,7 +29,7 @@ header {
 .no-release .btn-release, .release .btn-pre-release,
 .no-release .btn-pre-release, .release .btn-draft,
 .no-release .btn-draft {
-  margin-top: 1em;
+  margin: 1em 0;
   cursor: default; }
 
 .release:last-of-type .release-col,
