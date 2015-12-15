@@ -14,6 +14,7 @@ namespace RimDev.Releases.Models
         public string Company { get; set; }
         public Dictionary<string, string> Repositories { get; set; }
         public string AccessToken { get; set; }
+        public string Email { get; set; }
 
         public IList<GitHubRepository> GetAllRepositories()
         {
@@ -54,7 +55,7 @@ namespace RimDev.Releases.Models
         public string Name { get; protected set; }
         public string FullName { get; protected set; }
     }
-    
+
     public class Stub : GitHubRepository {
         public Stub(string description) {
             Description = description;

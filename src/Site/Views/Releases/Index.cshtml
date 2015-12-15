@@ -11,8 +11,8 @@
   <div class="row release">
     <div class="col-sm-12 col-md-2 release-flags">
       <span class="btn btn-release">@release.GetReleaseStatus()</span>
-      <div class="text-muted">@release.CreatedAt <span class="octicon octicon-calendar"></span></div>
-      <a href="">commitHash <span class="octicon octicon-git-commit"></span></a>
+      <div class="text-muted"><span class="octicon octicon-calendar"></span> @release.CreatedAt</div>
+      <div class="text-muted"><span class="octicon octicon-tag"></span> tag</div>
       <img class="avatar" src="@(release.Release.Author.AvatarUrl)?v=3&s=32" alt="@(release.Release.Author.Login)" title="@(release.Release.Author.Login)">
     </div><!-- /.release-flags -->
 
