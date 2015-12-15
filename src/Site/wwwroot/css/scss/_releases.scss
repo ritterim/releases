@@ -34,6 +34,11 @@ header {
   }
 }
 
+%release-buttons {
+  margin-top: 1em;
+  cursor: default;
+}
+
 .release,
 .no-release {
   &:last-of-type {
@@ -46,12 +51,15 @@ header {
   }
   .btn-release {
     background: $green;
-    margin-top: 1em;
+    @extend %release-buttons;
   }
-  .btn-no-release {
-    cursor: default;
+  .btn-pre-release {
     background: $purple;
-    padding: inherit;
+    @extend %release-buttons;
+  }
+  .btn-draft {
+    background: $dark-orange;
+    @extend %release-buttons;
   }
   .msg-no-release {
     @include border(top,$purple);

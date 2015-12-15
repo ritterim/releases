@@ -11,12 +11,12 @@
     if (release.HasRelease) {
     <div class="row release">
       <div class="col-sm-12 col-md-2 release-flags">
-        <span class="btn btn-release">@release.GetReleaseStatus()</span>
+        <span class="btn btn-@release.GetReleaseStatus().ToLower() btn-sm">@release.GetReleaseStatus()</span>
         <div class="text-muted"><span class="octicon octicon-calendar"></span> @release.CreatedAt</div>
         <div class="text-muted"><span class="octicon octicon-tag"></span> @release.Release.TagName</div>
         <img class="avatar" src="@(release.Release.Author.AvatarUrl)?v=3&s=32" alt="@(release.Release.Author.Login)" title="@(release.Release.Author.Login)">
       </div><!-- /.release-flags -->
-  
+
       <div class="col-sm-12 col-md-10 release-col">
         <h3 class="text-muted"><span class="octicon octicon-repo"></span> @release.Description</h3>
         <h4 class="release-title">@release.Title</h4>
@@ -28,6 +28,6 @@
     }
   }
 } else {
-  @Html.Partial("_empty")  
+  @Html.Partial("_empty")
 }
 </div><!-- /.container -->
