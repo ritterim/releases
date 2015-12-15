@@ -32,6 +32,8 @@ namespace RimDev.Releases.Models
         {
             return fullName.Equals(current, StringComparison.InvariantCultureIgnoreCase);
         }
+
+        public bool HasEmail => !string.IsNullOrEmpty(Email);
     }
 
     public class GitHubRepository
