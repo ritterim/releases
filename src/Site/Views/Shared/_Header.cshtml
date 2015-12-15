@@ -13,11 +13,14 @@
       <div class="col-md-6">
         <h4 class="text-muted"><span class="octicon octicon-repo"></span> @repository.Description</h4>
       </div>
-      <div class="col-md-6 header-email">
-          <a class="btn btn-default btn-sm" href="mailto:@AppSettings.Email">
-            <strong><span class="octicon octicon-mail"></span> Feedback? </strong>
-          </a>
-      </div>
+      @if (AppSettings.HasEmail)
+      {
+        <div class="col-md-6 header-email">
+            <a class="btn btn-default btn-sm" href="mailto:@AppSettings.Email">
+              <strong><span class="octicon octicon-mail"></span> Feedback? </strong>
+            </a>
+        </div>
+      }
     </div>
     <div class="row">
       @Html.Partial("_repositories", repository)
