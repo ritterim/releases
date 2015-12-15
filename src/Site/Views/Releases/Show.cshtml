@@ -6,13 +6,13 @@
 
 @Html.Partial("_Header")
 
-<div class="container">  
+<div class="container">
   @if (Model.NotEmpty) {
   foreach(var release in Model.Releases) {
     if (release.HasRelease) {
     <div class="row release">
       <div class="col-md-2 release-flags">
-        <span class="btn btn-@release.GetReleaseStatus().ToLower() btn-sm">@release.GetReleaseStatus()</span>
+        <span class="label label-@release.GetReleaseStatus().ToLower()">@release.GetReleaseStatus()</span>
         <div class="text-muted"><span class="octicon octicon-calendar"></span> @release.CreatedAt</div>
         <div class="text-muted"><span class="octicon octicon-tag"></span> @release.Release.TagName</div>
       <img class="avatar" src="@(release.Release.Author.AvatarUrl)?v=3&s=32" alt="@(release.Release.Author.Login)" title="@(release.Release.Author.Login)">
@@ -26,14 +26,14 @@
     </div><!-- /.release -->
     }
   }
-  
-  <ul class="pager">    
+
+  <ul class="pager">
     @if (Model.PreviousPage.HasValue) {
     <li class="previous">
-      <a asp-action="show" 
-         asp-route-id=@Model.CurrentRepository.FullName 
+      <a asp-action="show"
+         asp-route-id=@Model.CurrentRepository.FullName
          asp-route-page=@Model.PreviousPage.Value>
-         Previous
+         <span class="octicon octicon-arrow-left"></span> Previous
       </a>
     </li>
     }
@@ -42,12 +42,12 @@
       <a asp-action="show"
          asp-route-id=@Model.CurrentRepository.FullName
          asp-route-page=@Model.NextPage.Value>
-         Next
+         Next <span class="octicon octicon-arrow-right"></span>
       </a>
     </li>
     }
   </ul>
-  
+
 } else {
   @Html.Partial("_empty")
 }
