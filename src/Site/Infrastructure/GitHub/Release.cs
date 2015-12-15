@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Newtonsoft.Json;
 using System.Linq;
 using Microsoft.AspNet.WebUtilities;
+using System.Text.RegularExpressions;
 
 namespace RimDev.Releases.Infrastructure.GitHub
 {
@@ -36,10 +37,9 @@ namespace RimDev.Releases.Infrastructure.GitHub
                 {
                     var values = x.Split(';');
                     Console.WriteLine(values[0]);
-                    var uri = new Uri(values[0].Replace("<", "").Replace(">", ""));
-                    var queryDictionary = QueryHelpers.ParseQuery(uri.Query);
+                    var uri = new Uri(Regex.Match(values[0], "<(.*?)>", RegexOptions.Compiled).Groups[1].Value);
 
-                    return new { rel = values[1], querystring = QueryHelpers.ParseQuery(uri.Query) };
+                    return new { rel = Regex.Match(values[1], "rel=\"(.*?)\"", RegexOptions.Compiled).Groups[1].Value, querystring = QueryHelpers.ParseQuery(uri.Query) };
                 })
                 .ToList();
 
