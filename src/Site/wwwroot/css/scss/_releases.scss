@@ -138,6 +138,15 @@ footer {
 }
 
 @media (max-width: 992px) {
+  .nav-tabs li {
+    width: 100%;
+    a {
+      @include border-radius(4px);
+      &.active {
+        @include border(bottom);
+      }
+    }
+  }
   .release,
   .no-release {
     .release-flags {
