@@ -15,6 +15,7 @@ header {
 }
 
 .nav-tabs {
+  padding-left: 1em;
   border-bottom: none !important;
   &>li.active {border-top: 3px solid chocolate;}
   &>li>a {

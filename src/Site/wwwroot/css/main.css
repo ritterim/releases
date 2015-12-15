@@ -10,6 +10,7 @@ header {
   margin: 10px 0; }
 
 .nav-tabs {
+  padding-left: 1em;
   border-bottom: none !important; }
   .nav-tabs > li.active {
     border-top: 3px solid chocolate; }
