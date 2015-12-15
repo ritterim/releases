@@ -1,6 +1,6 @@
 @model RimDev.Releases.ViewModels.Releases.ShowViewModel
 @{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = $"Releases for `{Model.CurrentRepository.Description}`";
     ViewData["Repository"] = Model.CurrentRepository;
 }
 
