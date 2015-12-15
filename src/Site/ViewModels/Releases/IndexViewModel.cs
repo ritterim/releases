@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Collections.Generic;
 using RimDev.Releases.Infrastructure.GitHub;
 using RimDev.Releases.Models;
@@ -13,6 +14,8 @@ namespace RimDev.Releases.ViewModels.Releases
 
         public AppSettings AppSettings {get;set;}
 		public IList<ReleaseViewModel> Releases {get;set;}
+        
+        public bool NotEmpty => Releases != null && Releases.Any();
 	}
 
     public class ReleaseViewModel
@@ -64,6 +67,6 @@ namespace RimDev.Releases.ViewModels.Releases
 
         public bool IsRelease => HasRelease ? !Release.Draft && !Release.Prerelease : false;
 
-        public bool IsPreRelease => HasRelease ? Release.Prerelease : false;
+        public bool IsPreRelease => HasRelease ? Release.Prerelease : false;        
     }
 }

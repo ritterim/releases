@@ -6,7 +6,7 @@
 
 @Html.Partial("_Header")
 
-<div class="container">
+<div class="container">  
   @if (Model.NotEmpty) {
   foreach(var release in Model.Releases) {
     if (release.HasRelease) {
@@ -14,7 +14,7 @@
       <div class="col-md-2 release-flags">
         <span class="btn btn-release">@release.GetReleaseStatus()</span>
         <div class="text-muted"><span class="octicon octicon-calendar"></span> @release.CreatedAt</div>
-        <div class="text-muted"><span class="octicon octicon-tag"></span> tag</div>
+        <div class="text-muted"><span class="octicon octicon-tag"></span> @release.Release.TagName</div>
       <img class="avatar" src="@(release.Release.Author.AvatarUrl)?v=3&s=32" alt="@(release.Release.Author.Login)" title="@(release.Release.Author.Login)">
       </div><!-- /.release-flags -->
       <div class="col-md-10 release-col">
@@ -49,8 +49,6 @@
   </ul>
   
 } else {
-  <div class="row no-release">
-    <span class="msg-no-release center-block"><span class="octicon octicon-squirrel"></span> Whoa! There's just nothing to see here!</span>
-  </div>
+  @Html.Partial("_empty")
 }
 </div><!-- /.container -->
