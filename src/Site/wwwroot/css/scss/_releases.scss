@@ -8,6 +8,12 @@ header {
   @include border(bottom);
 }
 
+.header-email {
+  .btn {
+    margin: 10px 0;
+  }
+}
+
 .nav-tabs {
   border-bottom: none !important;
   &>li.active {border-top: 3px solid chocolate;}
@@ -109,6 +115,9 @@ footer {
 
 // Bootstrap screen-md width
 @media (min-width: 992px) {
+  .header-email {
+    .btn {float: right;}
+  }
   .release,
   .no-release {
     // Can't extend %flexbox within a media query

@@ -4,14 +4,23 @@
 }
 <div class="container-fluid header-title">
   <div class="container">
-    <h1>
-      @AppSettings.Company
-    </h1>
+      <h1>@AppSettings.Company</h1>
   </div><!-- /.container -->
 </div><!-- /.container-fluid -->
 <header class="container-fluid">
   <div class="container">
-    <h4 class="text-muted"><span class="octicon octicon-repo"></span> @repository.Description</h4>
-    @Html.Partial("_repositories", repository)
+    <div class="row">
+      <div class="col-md-6">
+        <h4 class="text-muted"><span class="octicon octicon-repo"></span> @repository.Description</h4>
+      </div>
+      <div class="col-md-6 header-email">
+          <a class="btn btn-default btn-sm" href="mailto:@AppSettings.Email">
+            <strong><span class="octicon octicon-mail"></span> Questions? Email @AppSettings.Company</strong>
+          </a>
+      </div>
+    </div>
+    <div class="row">
+      @Html.Partial("_repositories", repository)
+    </div>
   </div><!-- /.container -->
 </header>

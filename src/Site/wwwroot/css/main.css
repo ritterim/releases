@@ -6,6 +6,9 @@ header {
   background: #f4f4f4;
   border-bottom: 1px solid #ddd; }
 
+.header-email .btn {
+  margin: 10px 0; }
+
 .nav-tabs {
   border-bottom: none !important; }
   .nav-tabs > li.active {
@@ -116,6 +119,8 @@ footer {
       text-decoration: none; }
 
 @media (min-width: 992px) {
+  .header-email .btn {
+    float: right; }
   .release,
   .no-release {
     display: -webkit-flex;
