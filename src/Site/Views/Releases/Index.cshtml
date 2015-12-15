@@ -9,15 +9,16 @@
   @foreach(var release in Model.Releases) {
 	if (release.HasRelease) {
   <div class="row release">
-    <div class="col-md-2 text-right release-flags">
+    <div class="col-sm-12 col-md-2 release-flags">
       <span class="btn btn-release">Release</span>
       <div class="text-muted">@release.CreatedAt <span class="octicon octicon-calendar"></span></div>
+      <a href="">commitHash <span class="octicon octicon-git-commit"></span></a>
       <img class="avatar" src="@(release.Release.Author.AvatarUrl)?v=3&s=32" alt="@(release.Release.Author.Login)" title="@(release.Release.Author.Login)">
     </div><!-- /.release-flags -->
 
-    <div class="col-md-10 release-col">
-      <h2>@release.Description</h2>
-      <h3 class="text-primary">@release.Title</h3>
+    <div class="col-sm-12 col-md-10 release-col">
+      <h3 class="text-muted"><span class="octicon octicon-repo"></span> @release.Description</h3>
+      <h4 class="release-title">@release.Title</h4>
       <div class="release-body">
         @await Html.MarkdownAsync(release.FullName, release.Body)
       </div><!-- /.release-body -->

@@ -28,31 +28,53 @@ header {
   }
 }
 
-.release {
-  @extend %flexbox;
+.release,
+.no-release {
   &:last-of-type {
     .release-col {border-bottom: none;}
   }
+  .muted {color: $muted;}
+  .btn {
+    color: white;
+    padding: .2em .3em;
+  }
+  .btn-release {
+    background: $green;
+    margin-top: 1em;
+  }
+  .btn-no-release {
+    cursor: default;
+    background: $purple;
+    padding: inherit;
+  }
+  .msg-no-release {
+    @include border(top,$purple);
+    @include border(bottom,$purple);
+    background: lighten($purple,45%);
+    color: $purple;
+    padding: .5em 1em;
+  }
+  .avatar {
+    @include border-radius(50%);
+    @include border;
+    margin-bottom: 1em;
+  }
+  .release-title {color: $purple;}
   .release-flags {
-    line-height: 2.5em;
-    .btn {
-      color: white;
-      padding: .2em .3em;
-    }
-    .btn-release {
-      background: #5cb85c;
-    }
-    .btn-no-release {
-      background: #6e5494;
-    }
-    .avatar {
-      @include border-radius(50%);
-      @include border;
-    }
+    line-height: 2em;
+    text-align: right;
+    a {display: block;}
   }
   .release-col {
     @include border(bottom);
     @include border(left);
+    h3 {
+      .octicon {
+        color: $grey-light;
+        font-size: 80%;
+      }
+    }
+    h4 {margin: 1em 0;}
     .release-body {
       padding-bottom: 2em;
       a[href^="https://github.com"] {
@@ -64,16 +86,45 @@ header {
   }
 }
 
+.no-release {
+  padding: 1em;
+}
+
 footer {
+  @include border(top);
   padding: 2em;
   p {color: $grey;}
+    em {
+      font-style: normal;
+      font-family: serif;
+    }
     a {
-      color: white;
-      &.btn:hover {color: white;}
-      &.btn-rimdev {
-        background: $grey;
-        @include border;
-        padding: .2em;
+      color: inherit;
+      &:hover {
+        color: inherit;
+        text-decoration: none;
       }
     }
+}
+
+// Bootstrap screen-md width
+@media (min-width: 992px) {
+  .release,
+  .no-release {
+    // Can't extend %flexbox within a media query
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    overflow: hidden;
+  }
+}
+
+@media (max-width: 992px) {
+  .release,
+  .no-release {
+    .release-flags {
+      text-align: left;
+      @include border(left);
+    }
+  }
 }

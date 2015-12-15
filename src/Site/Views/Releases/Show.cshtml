@@ -7,21 +7,28 @@
 @Html.Partial("_Header")
 
 <div class="container">
-  @foreach(var release in Model.Releases) {
+  @if (Model.NotEmpty) {
+  foreach(var release in Model.Releases) {
     if (release.HasRelease) {
-      <div class="row release">
-        <div class="col-md-2 text-right release-flags">
-          <span class="btn btn-release">Release</span>
-          <div class="text-muted">@release.CreatedAt <span class="octicon octicon-calendar"></span></div>
-        <img class="avatar" src="@(release.Release.Author.AvatarUrl)?v=3&s=32" alt="@(release.Release.Author.Login)" title="@(release.Release.Author.Login)">
-        </div><!-- /.release-flags -->
-        <div class="col-md-10 release-col">
-          <h2 class="text-primary">@release.Title</h2>
-          <div class="release-body">
-          @await Html.MarkdownAsync(release.FullName, release.Body)
-          </div><!-- /.release-body -->
-        </div><!-- /.release-col -->
-      </div><!-- /.release -->
+    <div class="row release">
+      <div class="col-md-2 release-flags">
+        <span class="btn btn-release">Release</span>
+        <div class="text-muted">@release.CreatedAt <span class="octicon octicon-calendar"></span></div>
+        <a href="">commitHash <span class="octicon octicon-git-commit"></span></a>
+      <img class="avatar" src="@(release.Release.Author.AvatarUrl)?v=3&s=32" alt="@(release.Release.Author.Login)" title="@(release.Release.Author.Login)">
+      </div><!-- /.release-flags -->
+      <div class="col-md-10 release-col">
+        <h4 class="release-title">@release.Title</h4>
+        <div class="release-body">
+        @await Html.MarkdownAsync(release.FullName, release.Body)
+        </div><!-- /.release-body -->
+      </div><!-- /.release-col -->
+    </div><!-- /.release -->
     }
-    }
+  }
+} else {
+  <div class="row no-release">
+    <span class="msg-no-release center-block"><span class="octicon octicon-squirrel"></span> Whoa! There's just nothing to see here!</span>
+  </div>
+}
 </div><!-- /.container -->
