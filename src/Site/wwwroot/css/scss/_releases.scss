@@ -45,19 +45,19 @@ header {
     .release-col {border-bottom: none;}
   }
   .muted {color: $muted;}
-  .btn {
+  .label {
     color: white;
     padding: .2em .3em;
   }
-  .btn-release {
+  .label-release {
     background: $green;
     @extend %release-buttons;
   }
-  .btn-pre-release {
+  .label-pre-release {
     background: $purple;
     @extend %release-buttons;
   }
-  .btn-draft {
+  .label-draft {
     background: $dark-orange;
     @extend %release-buttons;
   }

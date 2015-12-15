@@ -11,7 +11,7 @@
     if (release.HasRelease) {
     <div class="row release">
       <div class="col-sm-12 col-md-2 release-flags">
-        <span class="btn btn-@release.GetReleaseStatus().ToLower() btn-sm">@release.GetReleaseStatus()</span>
+        <span class="label label-@release.GetReleaseStatus().ToLower()">@release.GetReleaseStatus()</span>
         <div class="text-muted"><span class="octicon octicon-calendar"></span> @release.CreatedAt</div>
         <div class="text-muted"><span class="octicon octicon-tag"></span> @release.Release.TagName</div>
         <img class="avatar" src="@(release.Release.Author.AvatarUrl)?v=3&s=32" alt="@(release.Release.Author.Login)" title="@(release.Release.Author.Login)">

@@ -25,11 +25,11 @@ header {
       background: none;
       border: none; }
 
-.release .btn-release,
-.no-release .btn-release, .release .btn-pre-release,
-.no-release .btn-pre-release, .release .btn-draft,
-.no-release .btn-draft {
-  margin-top: 1em;
+.release .label-release,
+.no-release .label-release, .release .label-pre-release,
+.no-release .label-pre-release, .release .label-draft,
+.no-release .label-draft {
+  margin: 1em 0;
   cursor: default; }
 
 .release:last-of-type .release-col,
@@ -40,21 +40,21 @@ header {
 .no-release .muted {
   color: #777; }
 
-.release .btn,
-.no-release .btn {
+.release .label,
+.no-release .label {
   color: white;
   padding: .2em .3em; }
 
-.release .btn-release,
-.no-release .btn-release {
+.release .label-release,
+.no-release .label-release {
   background: #5cb85c; }
 
-.release .btn-pre-release,
-.no-release .btn-pre-release {
+.release .label-pre-release,
+.no-release .label-pre-release {
   background: #6e5494; }
 
-.release .btn-draft,
-.no-release .btn-draft {
+.release .label-draft,
+.no-release .label-draft {
   background: #aa6708; }
 
 .release .msg-no-release,
