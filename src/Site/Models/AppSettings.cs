@@ -15,6 +15,7 @@ namespace RimDev.Releases.Models
         public Dictionary<string, string> Repositories { get; set; }
         public string AccessToken { get; set; }
         public string Email { get; set; }
+        public string Logo { get; set; }
 
         public IList<GitHubRepository> GetAllRepositories()
         {
@@ -34,6 +35,7 @@ namespace RimDev.Releases.Models
         }
 
         public bool HasEmail => !string.IsNullOrEmpty(Email);
+        public bool HasLogo => !string.IsNullOrEmpty(Logo);
     }
 
     public class GitHubRepository

@@ -2,24 +2,29 @@ header {
   background: $grey-lightest;
   border-bottom: 1px solid $grey-light;
 }
-
 .header-title {
   background: lighten($grey-light,9%);
   @include border(bottom);
 }
-
 .header-email {
   .btn {
     margin: 10px 0;
   }
 }
-
+.header-logo {
+  display: inline-block;
+  float: left;
+  padding: 1em 1em 1em 0;
+  img {
+    max-height: 3em;
+  }
+}
 .nav-tabs {
   padding-left: 1em;
   border-bottom: none !important;
   &>li.active {border-top: 3px solid chocolate;}
   &>li>a {
-    border: none;
+    border-color: transparent;
     &.active,
     &.active:hover {
       background: white;
@@ -30,7 +35,7 @@ header {
     &:hover {
       color: chocolate;
       background: none;
-      border: none;
+      border-color: transparent;
     }
   }
 }
@@ -138,20 +143,28 @@ footer {
 }
 
 @media (max-width: 992px) {
-  .nav-tabs li {
-    width: 100%;
-    a {
-      @include border-radius(4px);
-      &.active {
-        @include border(bottom);
+  .nav-tabs {
+    margin-bottom: 1em;
+    &>li {
+      width: 100%;
+      &>a {
+        @include border-radius(4px);
+        &.active {border-bottom-color: $grey-light;}
       }
     }
   }
   .release,
   .no-release {
     .release-flags {
+      float: left;
+      clear: both;
       text-align: left;
       @include border(left);
+      width: 100%;
+    }
+    .release-col {
+      float: left;
+      width: 100%;
     }
   }
 }
