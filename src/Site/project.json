@@ -47,9 +47,10 @@
   "scripts": {
     "prepublish": [
       "npm install",
+      "./node_modules/.bin/gulp clean-node-sass-src",
       "bower install",
-      "gulp clean",
-      "gulp min"
+      "./node_modules/.bin/gulp clean",
+      "./node_modules/.bin/gulp min"
     ]
   }
 }
