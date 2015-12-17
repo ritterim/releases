@@ -51,7 +51,11 @@ header {
 .release .label,
 .no-release .label {
   color: white;
-  padding: .2em .3em; }
+  display: inline-block;
+  font-size: 100%;
+  font-weight: normal;
+  margin-bottom: .5em;
+  padding: .5em; }
 
 .release .label-release,
 .no-release .label-release {
@@ -75,21 +79,19 @@ header {
 
 .release .avatar,
 .no-release .avatar {
-  -webkit-border-radius: 50%;
-  -moz-border-radius: 50%;
-  -o-border-radius: 50%;
-  border-radius: 50%;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  -o-border-radius: 4px;
+  border-radius: 4px;
   border: 1px solid #ddd;
-  margin-bottom: 1em; }
-
-.release .release-title,
-.no-release .release-title {
-  color: #6e5494; }
+  margin: .4em 0;
+  max-height: 32px; }
 
 .release .release-flags,
 .no-release .release-flags {
-  line-height: 2em;
-  text-align: right; }
+  line-height: 1.5em;
+  text-align: right;
+  margin-top: .4em; }
   .release .release-flags a,
   .no-release .release-flags a {
     display: block; }
