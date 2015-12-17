@@ -35,8 +35,11 @@ namespace Site
 
             services.AddSingleton<Client>(s =>
             {
-                var settings = s.GetService<AppSettings>();                
-                return new Client(settings.AccessToken, settings.Company);                    
+                var settings = s.GetService<AppSettings>();
+
+                return new Client(
+                    settings.AccessToken,
+                    string.IsNullOrEmpty(settings.Company) ? Client.DefaultUserAgent : settings.Company);
             });
 
             services.AddLogging();

@@ -4,13 +4,18 @@
 }
 <div class="container-fluid header-title">
   <div class="container">
-      @if (AppSettings.HasLogo)
+      @if (AppSettings.HasLogo && AppSettings.ShowLogoInHeader)
       {
         <div class="header-logo">
-          <img src="@AppSettings.Logo" alt="@AppSettings.Company">
+          <a asp-controller="releases" asp-action="index">
+            <img src="@AppSettings.Logo" alt="@AppSettings.Company">
+          </a>
         </div>
       }
-      <h1>@AppSettings.Company</h1>
+      @if (AppSettings.HasCompany && AppSettings.ShowCompanyInHeader)
+      {
+        <h1>@AppSettings.Company</h1>
+      }
   </div><!-- /.container -->
 </div><!-- /.container-fluid -->
 <header class="container-fluid">
