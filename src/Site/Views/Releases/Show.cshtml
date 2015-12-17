@@ -9,11 +9,11 @@
 <div class="container">
   @if (Model.NotEmpty) {
   foreach(var release in Model.Releases) {
-    var ReleaseType = release.GetReleaseStatus();
+    var releaseType = release.GetReleaseStatus();
     if (release.HasRelease) {
     <div class="row release">
       <div class="col-md-2 release-flags">
-        <span class="label label-@ReleaseType.ToLower()">@ReleaseType</span>
+        <span class="label label-@releaseType.ToLower()">@releaseType</span>
         <div class="text-muted"><span class="octicon octicon-calendar"></span> @release.CreatedAt</div>
         <div class="text-muted"><span class="octicon octicon-tag"></span> @release.Release.TagName</div>
       <img class="avatar" src="@(release.Release.Author.AvatarUrl)?v=3&s=32" alt="@(release.Release.Author.Login)" title="@(release.Release.Author.Login)">
