@@ -16,6 +16,8 @@ namespace RimDev.Releases.Models
         public string AccessToken { get; set; }
         public string Email { get; set; }
         public string Logo { get; set; }
+        public bool ShowCompanyInHeader { get; set; }
+        public bool ShowLogoInHeader { get; set; }
 
         public IList<GitHubRepository> GetAllRepositories()
         {
@@ -34,6 +36,7 @@ namespace RimDev.Releases.Models
             return fullName.Equals(current, StringComparison.InvariantCultureIgnoreCase);
         }
 
+        public bool HasCompany => !string.IsNullOrEmpty(Company);
         public bool HasEmail => !string.IsNullOrEmpty(Email);
         public bool HasLogo => !string.IsNullOrEmpty(Logo);
     }
