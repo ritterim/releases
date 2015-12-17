@@ -75,11 +75,11 @@ header {
     padding: .5em 1em;
   }
   .avatar {
-    @include border-radius(50%);
+    @include border-radius(4px);
     @include border;
     margin-bottom: 1em;
+    max-height: 32px; // This must match `s=32` in the avatar url string
   }
-  .release-title {color: $purple;}
   .release-flags {
     line-height: 2em;
     text-align: right;
