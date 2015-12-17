@@ -47,9 +47,9 @@
   "scripts": {
     "prepublish": [
       "npm install",
-      "bower install",
-      "gulp clean",
-      "gulp min"
+      "./node_modules/.bin/bower install --config.interactive=false",
+      "./node_modules/.bin/gulp clean",
+      "./node_modules/.bin/gulp min"
     ]
   }
 }

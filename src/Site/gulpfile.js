@@ -31,6 +31,12 @@ gulp.task("clean:css", function(cb) {
 
 gulp.task("clean", ["clean:js", "clean:css"]);
 
+gulp.task("clean-node-sass-src", function (cb) {
+    // There's a *.vcxproj file in this directory. As of ASP.NET 5 beta 6, DNU will attempt (and fail) to compile it,
+    // so we need to make sure it's gone before it gets that far.
+    rimraf("./node_modules/gulp-sass/node_modules/node-sass/src/libsass/win/", cb);
+});
+
 gulp.task('sass', function () {
   return gulp.src(paths.sass, {base: paths.webroot + "css/scss"})
     .pipe(sass())
@@ -57,4 +63,4 @@ gulp.task("min:css", function() {
     .pipe(gulp.dest("."));
 });
 
-gulp.task("min", ["min:js", "min:css", "sass", "watch"]);
+gulp.task("min", ["min:js", "min:css", "sass"]);
