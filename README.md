@@ -16,7 +16,7 @@ Pulls and displays releases from multiple GitHub repositories.
 The app. contains an `appsettings.json` file. This should be treated as a template **only** where custom-settings go in a separate environment-specific (i.e.
 `appsettings.Development.json`).
 
-```json
+```text
 {
     "appSettings" :{
         "accessToken": "%your-personal-access-token%",
