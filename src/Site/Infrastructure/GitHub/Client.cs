@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 
 namespace RimDev.Releases.Infrastructure.GitHub
@@ -13,11 +14,13 @@ namespace RimDev.Releases.Infrastructure.GitHub
         private const string baseUrl = "https://api.github.com/";
         private readonly string userAgent;
         public const string DefaultUserAgent = "RimDev.Releases";
+        private ILogger<Client> logger;
 
-        public Client(string apiToken, string userAgent = DefaultUserAgent)
+        public Client(string apiToken, ILogger<Client> logger, string userAgent = DefaultUserAgent)
         {
             this.apiToken = apiToken;
             this.userAgent = userAgent;
+            this.logger = logger;
         }
 
         public async Task<ReleasesResponse> GetReleases(string owner, string repo, int page = 1, int pageSize = 10)
@@ -34,8 +37,7 @@ namespace RimDev.Releases.Infrastructure.GitHub
 
                 IEnumerable<string> links;
                 result.Headers.TryGetValues("Link", out links);
-                var header = (links ?? new string[0]).FirstOrDefault();
-                Console.WriteLine($"header : {header}");
+                var header = (links ?? new string[0]).FirstOrDefault();                
 
                 return new ReleasesResponse
                 {
