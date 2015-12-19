@@ -36,7 +36,6 @@ namespace RimDev.Releases.Infrastructure.GitHub
                 .Select(x =>
                 {
                     var values = x.Split(';');
-                    Console.WriteLine(values[0]);
                     var uri = new Uri(Regex.Match(values[0], "<(.*?)>", RegexOptions.Compiled).Groups[1].Value);
                     var rel = Regex.Match(values[1], "rel=\"(.*?)\"", RegexOptions.Compiled).Groups[1].Value;
 

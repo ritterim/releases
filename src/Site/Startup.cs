@@ -39,7 +39,9 @@ namespace Site
 
                 return new Client(
                     settings.AccessToken,
-                    string.IsNullOrEmpty(settings.Company) ? Client.DefaultUserAgent : settings.Company);
+                    s.GetService<ILogger<Client>>(),
+                    string.IsNullOrEmpty(settings.Company) ? Client.DefaultUserAgent : settings.Company
+                );
             });
 
             services.AddLogging();
