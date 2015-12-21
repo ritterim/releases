@@ -2,7 +2,6 @@
 "use strict";
 
 var gulp = require("gulp"),
-  fs = require("fs"),
   rimraf = require("rimraf"),
   concat = require("gulp-concat"),
   cssmin = require("gulp-cssmin"),
@@ -32,7 +31,7 @@ gulp.task("clean:css", function(cb) {
 });
 
 gulp.task("clean:sqlite", function(cb) {
-  fs.open(paths.sqliteDb, 'w', cb);
+  rimraf(paths.sqliteDb, cb);
 });
 
 gulp.task("clean", ["clean:js", "clean:css", "clean:sqlite"]);

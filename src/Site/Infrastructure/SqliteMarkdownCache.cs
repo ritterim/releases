@@ -41,11 +41,6 @@ namespace RimDev.Releases.Infrastructure
                 return;
             }
 
-            if (!System.IO.File.Exists(file))
-            {
-                throw new ApplicationException($"SQLite database at path '{file}' was not found.");
-            }
-
             var tableExists = await TableExistsAsync(CacheTableName);
             if (!tableExists)
             {
