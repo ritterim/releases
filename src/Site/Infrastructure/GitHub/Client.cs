@@ -10,15 +10,19 @@ namespace RimDev.Releases.Infrastructure.GitHub
 {
     public class Client
     {
-        private readonly string apiToken;
         private const string baseUrl = "https://api.github.com/";
+
+        private readonly string apiToken;
+        private readonly IMarkdownCache markdownCache;
+
         private readonly string userAgent;
         public const string DefaultUserAgent = "RimDev.Releases";
         private ILogger<Client> logger;
 
-        public Client(string apiToken, ILogger<Client> logger, string userAgent = DefaultUserAgent)
+        public Client(string apiToken, IMarkdownCache markdownCache, ILogger<Client> logger, string userAgent = "RimDev.Releases")
         {
             this.apiToken = apiToken;
+            this.markdownCache = markdownCache;
             this.userAgent = userAgent;
             this.logger = logger;
         }
@@ -56,13 +60,23 @@ namespace RimDev.Releases.Infrastructure.GitHub
 
         public async Task<string> RenderMarkdown(string markdown, string context, string mode = "gfm")
         {
+            var cacheItem = await markdownCache.Get(markdown, context, mode);
+            if (cacheItem != null)
+            {
+                return cacheItem;
+            }
+
             var url = new Uri($"{baseUrl}markdown");
             var json = new { text = markdown, mode = mode, context = context };
 
             using (var client = GetClient(url))
             {
                 var response = await client.PostAsync("", new StringContent(JsonConvert.SerializeObject(json)));
-                return await response.Content.ReadAsStringAsync();
+                var content = await response.Content.ReadAsStringAsync();
+
+                await markdownCache.Add(markdown, context, mode, content);
+
+                return content;
             }
         }
 
