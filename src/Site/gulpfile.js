@@ -2,6 +2,7 @@
 "use strict";
 
 var gulp = require("gulp"),
+  fs = require("fs"),
   rimraf = require("rimraf"),
   concat = require("gulp-concat"),
   cssmin = require("gulp-cssmin"),
@@ -20,6 +21,7 @@ paths.minCss = paths.webroot + "css/**/*.min.css";
 paths.concatJsDest = paths.webroot + "js/site.min.js";
 paths.concatCssDest = paths.webroot + "css/site.min.css";
 paths.sass = paths.webroot + "css/**/*.scss";
+paths.sqliteDb = './releases-db.sqlite';
 
 gulp.task("clean:js", function(cb) {
   rimraf(paths.concatJsDest, cb);
@@ -29,7 +31,11 @@ gulp.task("clean:css", function(cb) {
   rimraf(paths.concatCssDest, cb);
 });
 
-gulp.task("clean", ["clean:js", "clean:css"]);
+gulp.task("clean:sqlite", function(cb) {
+  fs.open(paths.sqliteDb, 'w', cb);
+});
+
+gulp.task("clean", ["clean:js", "clean:css", "clean:sqlite"]);
 
 gulp.task("clean-node-sass-src", function (cb) {
     // There's a *.vcxproj file in this directory. As of ASP.NET 5 beta 6, DNU will attempt (and fail) to compile it,
