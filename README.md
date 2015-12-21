@@ -1,4 +1,4 @@
-# releases
+# releases [![Build Status](https://travis-ci.org/ritterim/releases.svg?branch=master)](https://travis-ci.org/ritterim/releases)
 
 Pulls and displays releases from multiple GitHub repositories.
 
