@@ -3,9 +3,11 @@ using Microsoft.AspNet.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using RimDev.Releases.Models;
-using System;
+using Microsoft.Extensions.PlatformAbstractions;
+using RimDev.Releases.Infrastructure;
 using RimDev.Releases.Infrastructure.GitHub;
+using RimDev.Releases.Models;
+using System.IO;
 
 namespace Site
 {
@@ -35,10 +37,17 @@ namespace Site
 
             services.AddSingleton<Client>(s =>
             {
+                var appEnv = s.GetService<IApplicationEnvironment>();
                 var settings = s.GetService<AppSettings>();
+
+                var markdownCache = new SqliteMarkdownCache(
+                    Path.Combine(
+                        appEnv.ApplicationBasePath,
+                        "releases-db.sqlite"));
 
                 return new Client(
                     settings.AccessToken,
+                    markdownCache,
                     s.GetService<ILogger<Client>>(),
                     string.IsNullOrEmpty(settings.Company) ? Client.DefaultUserAgent : settings.Company
                 );
