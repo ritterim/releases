@@ -45,7 +45,7 @@ you want to access ***your*** private repos. **Remember, tokens are one-time vis
 
   - `dnu publish --configuration Release --out %output-path% --runtime active`
 
-  This will use the currently-selected runtime to pre-configure runtime-scripts.`
+  This will use the currently-selected runtime to pre-configure runtime-scripts.
 
   ### IIS
 
