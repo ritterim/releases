@@ -13,8 +13,8 @@
         </div>
       }
       @if (AppSettings.HasCompany && AppSettings.ShowCompanyInHeader)
-      {        
-        <h1>@AppSettings.Company</h1>         
+      {
+        <h1>@AppSettings.Company</h1>
       }
   </div><!-- /.container -->
 </div><!-- /.container-fluid -->
@@ -25,19 +25,19 @@
         <h4 class="text-muted">
             <span class="octicon octicon-repo"></span> @repository.Description
             <small>
-                @if (AppSettings.UseDropdownNavigation) 
+                @if (AppSettings.UseDropdownNavigation)
                 {
-                @Html.Partial("_repositoriesdropdown", repository)  
-                } 
+                @Html.Partial("_repositoriesdropdown", repository)
+                }
             </small>
-        </h4>        
+        </h4>
       </div>
       @if (AppSettings.HasEmail)
-      {        
-        <div class="col-md-3 header-email">                      
+      {
+        <div class="col-md-3 header-email">
             <a class="btn btn-default btn-sm pull-right" href="mailto:@AppSettings.Email">
                 <strong><span class="octicon octicon-mail"></span> Feedback? </strong>
-            </a>            
+            </a>
         </div>
       }
     <div class="row">
