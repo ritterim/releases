@@ -1,0 +1,49 @@
+@inject AppSettings AppSettings
+@model GitHubRepository
+
+@functions{
+    string active(RimDev.Releases.Models.GitHubRepository r, string value = "")
+    {
+        return AppSettings.IsMatch(r.FullName, Model?.FullName) ? "active" : value;
+    }
+
+    string isAllActive()
+    {
+        return string.IsNullOrWhiteSpace(Model?.FullName) ? "active" : "";
+    }
+}
+
+<!-- Split button -->
+<div class="btn-group">
+  <button class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <strong>
+        <span class="octicon octicon-list-unordered"></span>
+        Repositories 
+        <span class="caret"></span>
+    </strong>
+  </button>
+  <ul class="dropdown-menu">
+    <li role="presentation" class="@isAllActive()">
+    <a
+        asp-controller="releases"
+        asp-action="index">
+        <span class="octicon octicon-clock"></span>
+        Latest
+    </a>
+    </li>
+    <li role="separator" class="divider"></li>
+   @foreach (var release in AppSettings.GetAllRepositories().OrderBy(x => x.Description))
+    {
+    <li role="presentation" class="@active(release)">
+    <a
+        asp-controller="releases"
+        asp-action="show"
+        asp-route-id="@release.FullName"
+        >
+        <span class="octicon octicon-repo text-muted"></span>
+        @release.Description
+        </a>
+    </li>
+    }
+  </ul>
+</div>

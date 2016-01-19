@@ -21,20 +21,29 @@
 <header class="container-fluid">
   <div class="container">
     <div class="row">
-      <div class="col-md-6">
-        <h4 class="text-muted"><span class="octicon octicon-repo"></span> @repository.Description</h4>
+      <div class="col-md-9">
+        <h4 class="text-muted">
+            <span class="octicon octicon-repo"></span> @repository.Description
+            <small>
+                @if (AppSettings.UseDropdownNavigation)
+                {
+                @Html.Partial("_repositoriesdropdown", repository)
+                }
+            </small>
+        </h4>
       </div>
       @if (AppSettings.HasEmail)
       {
-        <div class="col-md-6 header-email">
-            <a class="btn btn-default btn-sm" href="mailto:@AppSettings.Email">
-              <strong><span class="octicon octicon-mail"></span> Feedback? </strong>
+        <div class="col-md-3 header-email">
+            <a class="btn btn-default btn-sm pull-right" href="mailto:@AppSettings.Email">
+                <strong><span class="octicon octicon-mail"></span> Feedback? </strong>
             </a>
         </div>
       }
-    </div>
     <div class="row">
-      @Html.Partial("_repositories", repository)
+      @if (!AppSettings.UseDropdownNavigation) {
+        @Html.Partial("_repositoriestabs", repository)
+      }
     </div>
   </div><!-- /.container -->
 </header>

@@ -18,10 +18,13 @@ namespace RimDev.Releases.Models
         public string Logo { get; set; }
         public bool ShowCompanyInHeader { get; set; }
         public bool ShowLogoInHeader { get; set; }
+        public bool UseDropdownNavigation { get; set; }
 
         public IList<GitHubRepository> GetAllRepositories()
         {
-            return Repositories.Select(x => new GitHubRepository(x.Key, x.Value)).ToList();
+            return Repositories
+                .Select(x => new GitHubRepository(x.Key, x.Value))
+                .ToList();
         }
 
         public GitHubRepository Find(string id)

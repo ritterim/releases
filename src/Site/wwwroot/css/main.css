@@ -16,6 +16,9 @@ header {
   .header-logo img {
     max-height: 3em; }
 
+h4 small {
+  padding-left: 10px; }
+
 .nav-tabs {
   padding-left: 1em;
   border-bottom: none !important; }
