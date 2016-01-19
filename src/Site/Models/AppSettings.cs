@@ -19,6 +19,7 @@ namespace RimDev.Releases.Models
         public bool ShowCompanyInHeader { get; set; }
         public bool ShowLogoInHeader { get; set; }
         public bool UseDropdownNavigation { get; set; }
+        public string DropdownNavigationText { get; set; }
 
         public IList<GitHubRepository> GetAllRepositories()
         {
