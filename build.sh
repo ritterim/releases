@@ -24,12 +24,6 @@ if test ! -e .nuget; then
     cp $cachePath .nuget/nuget.exe
 fi
 
-mono .nuget/nuget.exe install KoreBuild -ExcludeVersion -o packages -nocache -pre
-
-if ! type dnvm > /dev/null 2>&1; then
-    source packages/KoreBuild/build/dnvm.sh
-fi
-
 if ! type dnx > /dev/null 2>&1 || [ -z "$SKIP_DNX_INSTALL" ]; then
     dnvm install 1.0.0-rc1-update1 -runtime coreclr -alias default
     dnvm install 1.0.0-rc1-update1 -runtime mono -alias default
