@@ -24,6 +24,10 @@ if test ! -e .nuget; then
     cp $cachePath .nuget/nuget.exe
 fi
 
+if ! type dnvm > /dev/null 2>&1; then
+    curl -sSL https://raw.githubusercontent.com/aspnet/Home/dev/dnvminstall.sh | DNX_BRANCH=dev sh && source ~/.dnx/dnvm/dnvm.sh
+fi
+
 if ! type dnx > /dev/null 2>&1 || [ -z "$SKIP_DNX_INSTALL" ]; then
     dnvm install 1.0.0-rc1-update1 -runtime coreclr -alias default
     dnvm install 1.0.0-rc1-update1 -runtime mono -alias default
