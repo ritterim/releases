@@ -37,10 +37,10 @@ namespace Site.Controllers
 
             await Task.WhenAll(requests);
 
-            foreach (var request in requests)
-            {
-                model.Releases.Add(request.Result);
-            }
+            model.Releases = requests
+                .Select(x => x.Result)
+                .OrderByDescending(x => x.Release.CreatedAt)
+                .ToList();
 
             return View(model);
         }
@@ -49,14 +49,14 @@ namespace Site.Controllers
         {
             // never go below 1
             page = Math.Max(1, page);
-            
+
             var currentRepository = appSettings.Find(id);
 
             if (currentRepository == null)
                 return HttpNotFound();
 
-            var releases = await GetAllReleases(currentRepository, page);            
-            
+            var releases = await GetAllReleases(currentRepository, page);
+
             if (releases == null)
                 return View(new ShowViewModel(currentRepository));
 
@@ -84,7 +84,7 @@ namespace Site.Controllers
             {
                 var releases = new List<ReleaseViewModel>();
                 var gitHubReleases = await gitHub.GetReleases(gitHubRepository.Owner, gitHubRepository.Name, page);
-                
+
                 return gitHubReleases;
             }
             catch (Exception ex)
