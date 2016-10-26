@@ -1,10 +1,6 @@
 language: csharp
 sudo: required
-os:
-  - linux
-  - osx
-before_install:
-  - if test "$TRAVIS_OS_NAME" == "osx"; then brew update; brew install icu4c; fi
-  - if test "$TRAVIS_OS_NAME" == "linux"; then sudo apt-get --ignore-missing install libunwind-dev gettext; fi
+mono: none
+dotnet: 1.0.0-preview2-003121
 script:
   - ./build.sh --quiet verify
