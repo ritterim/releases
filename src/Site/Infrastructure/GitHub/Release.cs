@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
 using System.Linq;
-using Microsoft.AspNet.WebUtilities;
+using Microsoft.AspNetCore.WebUtilities;
 using System.Text.RegularExpressions;
 
 namespace RimDev.Releases.Infrastructure.GitHub

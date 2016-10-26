@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNet.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using RimDev.Releases.Infrastructure.GitHub;
 using RimDev.Releases.Models;
@@ -30,6 +30,8 @@ namespace Site.Controllers
         {
             var model = new IndexViewModel();
 
+            var release = gitHub.GetLatestRelease("App-vNext", "polly").Result;
+
             var requests = appSettings
                 .GetAllRepositories()
                 .Select(x => GetLatestRelease(x))
@@ -39,7 +41,7 @@ namespace Site.Controllers
 
             model.Releases = requests
                 .Select(x => x.Result)
-                .OrderByDescending(x => x.Release.CreatedAt)
+                .OrderByDescending(x => x.Release?.CreatedAt)
                 .ToList();
 
             return View(model);
@@ -53,7 +55,7 @@ namespace Site.Controllers
             var currentRepository = appSettings.Find(id);
 
             if (currentRepository == null)
-                return HttpNotFound();
+                return NotFound();
 
             var releases = await GetAllReleases(currentRepository, page);
 

@@ -36,7 +36,7 @@ namespace RimDev.Releases.ViewModels.Releases
         public string Title => Release?.Name;
 
         public string Body => Release?.Body;
-        public string CreatedAt => (Release != null) ? Release.CreatedAt.Date.ToShortDateString() : "n/a";
+        public string CreatedAt => (Release != null) ? Release.CreatedAt.Date.ToString("d") : "n/a";
 		
 		public bool HasRelease => Release != null;
 
