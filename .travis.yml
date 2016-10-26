@@ -1,7 +1,5 @@
 language: csharp
 sudo: required
-mono:
-  - 4.0.5
 os:
   - linux
   - osx
