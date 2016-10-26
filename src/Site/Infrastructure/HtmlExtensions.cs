@@ -1,5 +1,6 @@
 using System.Threading.Tasks;
-using Microsoft.AspNet.Mvc.Rendering;
+using Microsoft.AspNetCore.Html;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using RimDev.Releases.Infrastructure.GitHub;
 
 namespace RimDev.Releases.Infrastructure
@@ -10,7 +11,7 @@ namespace RimDev.Releases.Infrastructure
             string context,
             string markdown)
             {
-                var client = value.ViewContext.HttpContext.ApplicationServices.GetService(typeof(Client)) as Client;
+                var client = value.ViewContext.HttpContext.RequestServices.GetService(typeof(Client)) as Client;
                 string html = string.Empty;
                 
                 if (!string.IsNullOrWhiteSpace(context) && !string.IsNullOrWhiteSpace(markdown))

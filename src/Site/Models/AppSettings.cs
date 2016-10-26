@@ -37,7 +37,7 @@ namespace RimDev.Releases.Models
 
         public bool IsMatch(string fullName, string current)
         {
-            return fullName.Equals(current, StringComparison.InvariantCultureIgnoreCase);
+            return fullName.Equals(current, StringComparison.OrdinalIgnoreCase);
         }
 
         public bool HasCompany => !string.IsNullOrEmpty(Company);

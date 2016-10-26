@@ -1,13 +1,12 @@
-using Microsoft.AspNet.Builder;
-using Microsoft.AspNet.Hosting;
+﻿using System.IO;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.PlatformAbstractions;
 using RimDev.Releases.Infrastructure;
 using RimDev.Releases.Infrastructure.GitHub;
 using RimDev.Releases.Models;
-using System.IO;
 
 namespace Site
 {
@@ -17,6 +16,7 @@ namespace Site
         {
             // Set up configuration sources.
             var builder = new ConfigurationBuilder()
+                .SetBasePath(env.ContentRootPath)
                 .AddJsonFile("appsettings.json")
                 .AddJsonFile($"appsettings.{env.EnvironmentName}.json", true)
                 .AddEnvironmentVariables();
@@ -28,21 +28,21 @@ namespace Site
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddSingleton<AppSettings>(s =>
+            services.AddSingleton(s =>
             {
                 var appSettings = new AppSettings();
                 Configuration.GetSection("AppSettings").Bind(appSettings);
                 return appSettings;
             });
 
-            services.AddSingleton<Client>(s =>
+            services.AddSingleton(s =>
             {
-                var appEnv = s.GetService<IApplicationEnvironment>();
+                var appEnv = s.GetService<IHostingEnvironment>();
                 var settings = s.GetService<AppSettings>();
 
                 var markdownCache = new SqliteMarkdownCache(
                     Path.Combine(
-                        appEnv.ApplicationBasePath,
+                        appEnv.ContentRootPath,
                         "releases-db.sqlite"));
 
                 return new Client(
@@ -74,8 +74,6 @@ namespace Site
                 app.UseExceptionHandler("/Home/Error");
             }
 
-            app.UseIISPlatformHandler();
-
             app.UseStaticFiles();
 
 
@@ -86,8 +84,5 @@ namespace Site
                     template: "{controller=Releases}/{action=Index}");
             });
         }
-
-        // Entry point for the application.
-        public static void Main(string[] args) => Microsoft.AspNet.Hosting.WebApplication.Run<Startup>(args);
     }
 }

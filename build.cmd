@@ -18,21 +18,4 @@ md .nuget
 copy %CACHED_NUGET% .nuget\nuget.exe > nul
 
 :restore
-IF "%BUILDCMD_KOREBUILD_VERSION%"=="" (
-    .nuget\nuget.exe install KoreBuild -ExcludeVersion -o packages -nocache -pre
-) ELSE (
-    .nuget\nuget.exe install KoreBuild -version %BUILDCMD_KOREBUILD_VERSION% -ExcludeVersion -o packages -nocache -pre
-)
-
-:getdnx
-IF "%BUILDCMD_DNX_VERSION%"=="" (
-    SET BUILDCMD_DNX_VERSION=latest
-)
-IF "%SKIP_DNX_INSTALL%"=="" (
-    CALL packages\KoreBuild\build\dnvm install %BUILDCMD_DNX_VERSION% -runtime CoreCLR -arch x86 -alias default
-    CALL packages\KoreBuild\build\dnvm install default -runtime CLR -arch x86 -alias default
-) ELSE (
-    CALL packages\KoreBuild\build\dnvm use default -runtime CLR -arch x86
-)
-
-dnu restore && dnu build src/* && dnx --project tests/RimDev.Releases.Tests test
+dotnet restore && dotnet build **/project.json

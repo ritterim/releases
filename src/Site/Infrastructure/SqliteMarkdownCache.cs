@@ -46,12 +46,14 @@ namespace RimDev.Releases.Infrastructure
             {
                 using (var conn = await GetOpenConnectionAsync())
                 {
-                    await conn.ExecuteAsync(
-                        $@"create table {CacheTableName}
+                    var command = conn.CreateCommand();
+                    command.CommandText = $@"create table {CacheTableName}
                            (
                                Key text primary key,
                                Contents blob
-                           )");
+                           )";
+
+                    command.ExecuteNonQuery();
                 }
             }
 
@@ -126,9 +128,10 @@ namespace RimDev.Releases.Infrastructure
             using (var conn = await GetOpenConnectionAsync())
             {
                 // Adapted from http://stackoverflow.com/a/1604121/941536
-                var result = await conn.ExecuteScalarAsync<long>(
-                    $"select count(*) from sqlite_master where type='table' and name='{tableName}'");
-
+                var command = conn.CreateCommand();
+                command.CommandText = $"select count(*) from sqlite_master where type='table' and name='{tableName}'";
+                var result = (long) command.ExecuteScalar();
+                
                 return result > 0;
             }
         }
@@ -149,7 +152,7 @@ namespace RimDev.Releases.Infrastructure
         // Source: http://stackoverflow.com/a/26558102
         static string Hash(string input)
         {
-            using (SHA1Managed sha1 = new SHA1Managed())
+            using (var sha1 = SHA1.Create())
             {
                 var hash = sha1.ComputeHash(Encoding.UTF8.GetBytes(input));
                 var sb = new StringBuilder(hash.Length * 2);
@@ -164,4 +167,5 @@ namespace RimDev.Releases.Infrastructure
             }
         }
     }
+  
 }
