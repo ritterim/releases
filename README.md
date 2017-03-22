@@ -6,8 +6,12 @@ Pulls and displays releases from multiple GitHub repositories.
 
   - `git clone releases`
   - `cd releases`
-  - `dnu restore`
-  - `dnx --project src/Site web aspnet_env=Development`
+  - `dotnet restore`
+  - `SET ASPNETCORE_ENVIRONMENT=Development`
+  - `cd src\Site`
+  - `cp appsettings.json appsettings.Development.json`
+  - Edit `appsettings.Development.json`
+  - `dotnet run`
 
 ## Development Workflow
 
@@ -21,11 +25,11 @@ The app. contains an `appsettings.json` file. This should be treated as a templa
     "appSettings" :{
         "accessToken": "%your-personal-access-token%",
         "company": "%your-company-name%",
-        "showCompanyInHeader: "(true/false)",
-        "showLogoInHeader" : "(true/false)",
-        "email" : "%contact-email%",
-        "logo" : "",
-        "repositories" : {
+        "showCompanyInHeader: true/false,
+        "showLogoInHeader": true/false,
+        "email": "%contact-email%",
+        "logo": "",
+        "repositories": {
             "ritterim/releases": "Releases"
         }
     }
