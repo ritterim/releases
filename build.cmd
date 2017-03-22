@@ -4,8 +4,6 @@ cd %~dp0
 SETLOCAL
 SET NUGET_VERSION=latest
 SET CACHED_NUGET=%LocalAppData%\NuGet\nuget.%NUGET_VERSION%.exe
-SET BUILDCMD_KOREBUILD_VERSION=
-SET BUILDCMD_DNX_VERSION=
 
 IF EXIST %CACHED_NUGET% goto copynuget
 echo Downloading latest version of NuGet.exe...
@@ -18,4 +16,4 @@ md .nuget
 copy %CACHED_NUGET% .nuget\nuget.exe > nul
 
 :restore
-dotnet restore && dotnet build **/project.json
+dotnet restore && dotnet build
