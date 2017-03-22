@@ -25,11 +25,11 @@ The app. contains an `appsettings.json` file. This should be treated as a templa
     "appSettings" :{
         "accessToken": "%your-personal-access-token%",
         "company": "%your-company-name%",
-        "showCompanyInHeader: "(true/false)",
-        "showLogoInHeader" : "(true/false)",
-        "email" : "%contact-email%",
-        "logo" : "",
-        "repositories" : {
+        "showCompanyInHeader: true/false,
+        "showLogoInHeader": true/false,
+        "email": "%contact-email%",
+        "logo": "",
+        "repositories": {
             "ritterim/releases": "Releases"
         }
     }
