@@ -1,7 +1,3 @@
-# Settings declared in this file will override those set in the AppVeyor UI.
-# Documentation: https://www.appveyor.com/docs/appveyor-yml/
-# Validator: https://ci.appveyor.com/tools/validate-yaml
-
 image: Visual Studio 2017
 
 cache:
@@ -10,10 +6,6 @@ cache:
 install:
   - ps: md -force .nuget >$null 2>&1
   - ps: "$ProgressPreference = 'SilentlyContinue'; Invoke-WebRequest 'https://dist.nuget.org/win-x86-commandline/latest/nuget.exe' -OutFile '.nuget/nuget.exe'"
-  - choco install gitversion.portable -pre -y
-
-before_build:
-  - ps: gitversion $env:APPVEYOR_BUILD_FOLDER /l console /output buildserver /updateAssemblyInfo /nofetch /b $env:APPVEYOR_REPO_BRANCH
 
 configuration: Release
 
